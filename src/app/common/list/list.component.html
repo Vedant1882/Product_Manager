@@ -1,0 +1,43 @@
+
+  
+    <table class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+
+                <th scope="col">Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Manufecturer Name</th>
+                <th scope="col">Product Type</th>
+                <th scope="col">Cost Price</th>
+                <th scope="col">Retail Price</th>
+                <th scope="col">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let p of data">
+            
+                <td>
+                    {{p.id}}
+                </td>
+                <td>
+                    {{ p.productName }}
+                </td>
+                <td>
+                    {{p.manufecturerName}}
+                </td>
+                <td>
+                    {{ p.productType }}
+                </td>
+                <td>
+                    {{p.costPrice}}
+                </td>
+                <td>
+                    {{ p.retailPrice }}
+                </td>
+                <td>
+                    <img width="50" height="50" src="https://img.icons8.com/bubbles/50/edit.png" alt="edit" (click)="edit(p)"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>

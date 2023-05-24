@@ -1,0 +1,21 @@
+<app-list [data]='product' (newItemEvent)="addItem($event)"></app-list>
+<div *ngIf="editMode">
+    <form #form="ngForm" novalidate (ngSubmit)="update()">
+        <label>Id</label>
+        <input type="text" [(ngModel)]="editObj.id" name="id" disabled><br>
+        <label>Product Name </label>
+        <input type="text" [(ngModel)]="editObj.productName" name="productName" #productName="ngModel"><br>
+        <label>manufecturer Name </label>
+        <input type="text" [(ngModel)]="editObj.manufecturerName" name="manufecturerName"
+            #manufecturerName="ngModel"><br>
+        <label>Product Type</label>
+        <input type="text" [(ngModel)]="editObj.productType" name="productType" #productType="ngModel"><br>
+        <label>Cost Price</label>
+        <input type="text" [(ngModel)]="editObj.costPrice" name="costPrice" #costPrice="ngModel"><br>
+        <label>Retail Price</label>
+        <input type="text" [(ngModel)]="editObj.retailPrice" name="retailPrice" #retailPrice="ngModel"><br>
+        <input type="submit">
+
+
+    </form>
+</div>
