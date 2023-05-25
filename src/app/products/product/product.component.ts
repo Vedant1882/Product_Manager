@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Product } from '../../models/product';
+import { AppConstants } from 'src/app/common/constants/app.constants';
 
 
 @Component({
@@ -9,15 +10,22 @@ import { Product } from '../../models/product';
 
 })
 export class ProductComponent {
+  @ViewChild('form') form:any;
    editMode: boolean = false;
+   dateFormate=AppConstants.dateFormat;
    public editObj: Product = {
     id: 0,
     productName: "",
     manufecturerName: "",
     productType: "",
     costPrice: 0,
-    retailPrice: 0
+    retailPrice: 0,
+    status:"",
+    mfgDate:  new Date(),
+    exprDate:new Date(),
+    imgUrl:""
   };
+  
 
   product: any = [{
     id: 1,
@@ -25,7 +33,11 @@ export class ProductComponent {
     manufecturerName: "Ashok",
     productType: "Abc",
     costPrice: 50,
-    retailPrice: 90
+    retailPrice: 90,
+    status:"Active",
+    mfgDate:  new Date(),
+    exprDate:new Date(),
+    imgUrl:""
   }, 
   {
     id: 2,
@@ -33,7 +45,11 @@ export class ProductComponent {
     manufecturerName: "Vedant",
     productType: "Abc",
     costPrice: 60,
-    retailPrice: 100
+    retailPrice: 100,
+    status:"Inactive",
+    mfgDate:  new Date(),
+    exprDate:new Date(),
+    imgUrl:""
   },
   {
     id: 3,
@@ -41,32 +57,38 @@ export class ProductComponent {
     manufecturerName: "Naman",
     productType: "Abc",
     costPrice: 60,
-    retailPrice: 100
+    retailPrice: 100,
+    status:"Active",
+    mfgDate:  new Date(),
+    exprDate:new Date(),
+    imgUrl:""
   }];
 
   addItem(newItem: any) {   
     this.product.forEach((element: Product) => {
       if(element.id == newItem.id){
-        this.editObj = element;
+        Object.assign(this.editObj,element);
         this.editMode = true;
       }
     });
-    
     //this.product.push(newItem);
   }
   update() {   
-      
-    this.product.forEach((element: Product) => {
-      if(element.id == this.editObj.id){
-         element.costPrice = this.editObj.costPrice;
-         element.manufecturerName = this.editObj.manufecturerName;
-         element.productName = this.editObj.productName;
-         element.productType =this.editObj.productType;
-         element.retailPrice = this.editObj.retailPrice;
-
+      if(this.form.valid){
+        this.product.forEach((element: Product) => {
+          if(element.id == this.editObj.id ){
+             element.costPrice = this.editObj.costPrice;
+             element.manufecturerName = this.editObj.manufecturerName;
+             element.productName = this.editObj.productName;
+             element.productType =this.editObj.productType;
+             element.retailPrice = this.editObj.retailPrice;
+            element.mfgDate=this.editObj.mfgDate;
+            element.exprDate=this.editObj.exprDate;
+            element.status=this.editObj.status;
+            this.editMode = false;
+          }
+        });
       }
-    });
-    
     //this.product.push(newItem);
   }
 }

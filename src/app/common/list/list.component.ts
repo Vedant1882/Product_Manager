@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AppConstants } from '../constants/app.constants';
 
 @Component({
   selector: 'app-list',
@@ -6,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent {
+  dateFormate=AppConstants.dateFormat;
 @Input() data:any=[];
 editData:any|undefined;
 @Output() newItemEvent = new EventEmitter<string>();

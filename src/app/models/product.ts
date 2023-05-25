@@ -5,6 +5,10 @@ export interface Product{
     productType:string;
     costPrice:number;
     retailPrice:number;
+    status:string;
+    mfgDate:Date;
+    exprDate:Date;
+    imgUrl:string
 
     // Product(){
     //   this.id = 0;
