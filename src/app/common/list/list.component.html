@@ -1,59 +1,29 @@
 <div *ngIf="data">
-    
+    <button mat-raised-button class="pull-right" color="accent" (click)="add()">Add Product</button>
     <table class="table table-striped" style="width:100%">
         <thead>
             <tr>
-
-                <th scope="col">Id</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Manufecturer Name</th>
-                <th scope="col">Product Type</th>
-                <th scope="col">Cost Price</th>
-                <th scope="col">Retail Price</th>
-                <th scope="col">Status</th>
-                <th scope="col">Mfg Date</th>
-                <th scope="col">Expiry Date</th>
-                <th scope="col">Img Url</th>
+                <th scope="col" *ngFor="let h of listHeader">
+                    {{h.columnName}}
+                </th>
                 <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
-
             <tr *ngFor="let p of data">
-
-                <td>
-                    {{p.id}}
-                </td>
-                <td>
-                    {{ p.productName }}
-                </td>
-                <td>
-                    {{p.manufecturerName}}
-                </td>
-                <td>
-                    {{ p.productType }}
-                </td>
-                <td>
-                    {{p.costPrice}}
-                </td>
-                <td>
-                    {{ p.retailPrice }}
-                </td>
-                <td>
-                    {{p.status}}
-                </td>
-                <td>
-                    {{ p.mfgDate |date:dateFormate}}
-                </td>
-                <td>
-                    {{p.exprDate |date:dateFormate}}
-                </td>
-                <td>
-                    {{ p.imgUrl }}
+                <td *ngFor="let h of listHeader">
+                    <span *ngIf="h.fieldType==2">{{p[h.field] | date:dateFormate}}</span>
+                    <span *ngIf="h.fieldType==1">{{p[h.field] }}</span>
+                    <span *ngIf="h.fieldType==0">{{p[h.field] }}</span>
                 </td>
                 <td>
                     <img width="50" height="50" src="https://img.icons8.com/bubbles/50/edit.png" alt="edit"
                         (click)="edit(p)" />
+                </td>
+                <td>
+                    <img width="50" height="50" src="https://img.icons8.com/bubbles/50/trash.png" alt="trash"
+                        (click)="delete(p)" />
                 </td>
             </tr>
         </tbody>

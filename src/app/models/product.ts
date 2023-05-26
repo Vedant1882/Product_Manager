@@ -9,13 +9,4 @@ export interface Product{
     mfgDate:Date;
     exprDate:Date;
     imgUrl:string
-
-    // Product(){
-    //   this.id = 0;
-    //   this.productName = '';
-    //   this.manufecturerName = '';
-    //   this.productType = '';
-    //   this.costPrice = 0;
-    //   this.retailPrice = 0;
-    // }
   }

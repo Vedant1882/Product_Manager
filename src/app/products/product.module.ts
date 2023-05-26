@@ -30,6 +30,7 @@ console.warn("loading")
     MatFormFieldModule,
     MatNativeDateModule
   ],
+  exports:[ListComponent]
 
 
 })

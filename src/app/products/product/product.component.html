@@ -1,111 +1,124 @@
-<app-list [data]='product' (newItemEvent)="addItem($event)"></app-list>
-<div *ngIf="editMode">
-<h1 class="text-success">Edit Product details</h1>
-    <div class="row">
-        <form #form="ngForm" novalidate (ngSubmit)=" form.form.valid && update()">
-
-            <div class="col-10">
-                <div class=" mb-3 col-10 d-flex">
-                    <mat-form-field class="form-control col-10">
-                        <mat-label>Product Name</mat-label>
-                        <input matInput id='productName' placeholder="Product Name...."
-                            [(ngModel)]="editObj.productName" name="productName" #productName="ngModel" required
-                            [ngClass]="{error:productName.errors && productName .touched && form.submitted}">
-                    </mat-form-field>
-
-                    <mat-radio-group  aria-label="Select an option" class="d-flex" required [(ngModel)]="editObj.status"
-                        name="status" #status="ngModel">
-                        <mat-radio-button value="Active"> <span class="text-success">Active</span></mat-radio-button>
-                        <mat-radio-button value="Inactive"><span class="text-danger">Inactive</span></mat-radio-button>
-                    </mat-radio-group>
-
+<div class="container">
+    <app-list [data]='product' [listHeader]="listHeader" (newItemEvent)="addItem($event)" (newItemEvent1)="addProduct()" (newItemEvent2)="deleteItem($event)"></app-list>
+    <div *ngIf="mode">
+        <h1 class="text-success" *ngIf="editMode">Edit Product details</h1>
+        <h1 class="text-success" *ngIf="!editMode">Add Product details</h1>
+        <div class="row">
+            <form #form="ngForm" novalidate (ngSubmit)=" form.form.valid && save(form.value)">
+                <div class="col-10">
+                    <div class=" mb-3 col-10 d-flex">
+                        <mat-form-field class="col-10">
+                            <mat-label>Product Name</mat-label>
+                            <input matInput id='productName' placeholder="Product Name...."
+                                [(ngModel)]="editObj.productName" name="productName" #productName="ngModel" required
+                                [ngClass]="{error:productName.errors && productName .touched && form.submitted}">
+                        </mat-form-field>
+                        <mat-radio-group aria-label="Select an option" class="d-flex" required
+                            [(ngModel)]="editObj.status" name="status" #status="ngModel">
+                            <mat-radio-button value="Active"> <span
+                                    class="text-success">Active</span></mat-radio-button>
+                            <mat-radio-button value="Inactive"><span
+                                    class="text-danger">Inactive</span></mat-radio-button>
+                        </mat-radio-group>
+                    </div>
                 </div>
-            </div>
-            <div class="col-10 d-flex">
-                <div class=" mb-3 col-12 col-md-6">
-                    <mat-form-field class="form-control col-10">
-                        <mat-label>Manufracturer Name</mat-label>
-                        <input matInput id='manufecturerName' placeholder="Manufracturer Name...."
-                            [(ngModel)]="editObj.manufecturerName" name="manufecturerName" #manufecturerName="ngModel"
-                            required [ngClass]="{error:manufecturerName.errors &&manufecturerName.touched}">
-                    </mat-form-field>
+                <div class="col-10 d-flex">
+                    <div class=" mb-3 col-12 col-md-6">
+                        <mat-form-field class="col-10">
+                            <mat-label>Manufracturer Name</mat-label>
+                            <input matInput id='manufecturerName' placeholder="Manufracturer Name...."
+                                [(ngModel)]="editObj.manufecturerName" name="manufecturerName"
+                                #manufecturerName="ngModel" required
+                                [ngClass]="{error:manufecturerName.errors &&manufecturerName.touched}">
+                        </mat-form-field>
+                    </div>
+                    <div class=" mb-3 ms-3 col-12 col-md-6">
+                        <mat-form-field class="col-10">
+                            <mat-label>Product Type</mat-label>
+                            <input matInput id='productType' placeholder="Product Type...."
+                                [(ngModel)]="editObj.productType" name="productType" #productType="ngModel" required
+                                max="60" min="18" [ngClass]="{error:productType.errors &&productType.touched}">
+                        </mat-form-field>
+                    </div>
                 </div>
-                <div class=" mb-3 ms-3 col-12 col-md-6">
-                    <mat-form-field class="form-control col-10">
-                        <mat-label>Product Type</mat-label>
-                        <input matInput id='productType' placeholder="Product Type...."
-                            [(ngModel)]="editObj.productType" name="productType" #productType="ngModel" required
-                            max="60" min="18" [ngClass]="{error:productType.errors &&productType.touched}">
-                    </mat-form-field>
+                <div class="col-10 d-flex">
+                    <div class=" mb-3 col-6">
+                        <mat-form-field class="col-10">
+                            <mat-label>Cost Price</mat-label>
+                            <input matInput id='costPrice' placeholder="Cost Price...." [(ngModel)]="editObj.costPrice"
+                                name="costPrice" #costPrice="ngModel" required
+                                [ngClass]="{error:costPrice.errors && costPrice.touched}" pattern="^\d+(\.\d{1,2})?$">
+                        </mat-form-field>
+                    </div>
+                    <div class="ms-3 mb-3 col-6">
+                        <mat-form-field class="col-10">
+                            <mat-label>Retail Price</mat-label>
+                            <input matInput id='retailPrice' placeholder="Retail Price...."
+                                [(ngModel)]="editObj.retailPrice" name="retailPrice" #retailPrice="ngModel" required
+                                [ngClass]="{error:retailPrice.errors && retailPrice.touched}"
+                                pattern="^\d+(\.\d{1,2})?$">
+                        </mat-form-field>
+                    </div>
                 </div>
-            </div>
-            <div class="col-10 d-flex">
-                <div class=" mb-3 col-6">
-                    <mat-form-field class="form-control col-10">
-                        <mat-label>Cost Price</mat-label>
-                        <input matInput id='costPrice' placeholder="Cost Price...." [(ngModel)]="editObj.costPrice"
-                            name="costPrice" #costPrice="ngModel" required
-                            [ngClass]="{error:costPrice.errors && costPrice.touched}" pattern="^\d+(\.\d{1,2})?$">
-                    </mat-form-field>
+                <div class="col-10 d-flex">
+                    <div class=" mb-3 col-6">
+                        <mat-form-field class="col-5">
+                            <mat-label>Choose a Manufracturing Date</mat-label>
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="editObj.mfgDate" name="mfgDate"
+                                #mfgDate="ngModel" required>
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class=" mb-3 col-6 ms-3">
+                        <mat-form-field class="col-5">
+                            <mat-label>Choose a Expiry Date</mat-label>
+                            <input matInput [matDatepicker]="dp3" [(ngModel)]="editObj.exprDate" name="exprDate"
+                                #exprDate="ngModel" required>
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
+                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
                 </div>
-
-                <div class="ms-3 mb-3 col-6">
-                    <mat-form-field class="form-control col-10">
-                        <mat-label>Retail Price</mat-label>
-                        <input matInput id='retailPrice' placeholder="Retail Price...."
-                            [(ngModel)]="editObj.retailPrice" name="retailPrice" #retailPrice="ngModel" required
-                            [ngClass]="{error:retailPrice.errors && retailPrice.touched}" pattern="^\d+(\.\d{1,2})?$">
-                    </mat-form-field>
+                <div *ngIf="productName.errors && productName.touched && form.submitted" class="col-10">
+                    <small class="text-danger" *ngIf="productName.errors['required']"> Product Name is
+                        required</small><sup class="ms-1 text-danger">*</sup>
                 </div>
-            </div>
-            <div class="col-10 d-flex">
-                <div class=" mb-3 col-6">
-                    <mat-form-field class="form-control col-5">
-                        <mat-label>Choose a Manufracturing Date</mat-label>
-                        <input matInput [matDatepicker]="picker" [(ngModel)]="editObj.mfgDate" name="mfgDate"
-                            #mfgDate="ngModel" required>
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
+                <div *ngIf="manufecturerName.errors && manufecturerName.touched && form.submitted">
+                    <small class="text-danger" *ngIf="manufecturerName.errors['required']"> Manufecturer name is
+                        required</small><sup class="ms-1 text-danger">*</sup>
                 </div>
-                <div class=" mb-3 col-6 ms-3">
-                    <mat-form-field class="form-control col-5">
-                        <mat-label>Choose a Expiry Date</mat-label>
-                        <input matInput [matDatepicker]="dp3" [(ngModel)]="editObj.exprDate" name="exprDate"
-                            #exprDate="ngModel" required>
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
-                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                    </mat-form-field>
+                <div *ngIf="productType.errors && productType.touched && form.submitted">
+                    <small class="text-danger" *ngIf="productType.errors['required']"> Product Type is
+                        required</small><sup class="ms-1 text-danger">*</sup>
                 </div>
-            </div>
-            <div *ngIf="productName.errors && productName.touched && form.submitted" class="col-10">
-                <small class="text-danger" *ngIf="productName.errors['required']"> Product Name is
-                    required</small>
-
-            </div>
-            <div *ngIf="manufecturerName.errors && manufecturerName.touched && form.submitted">
-                <small class="text-danger" *ngIf="manufecturerName.errors['required']"> Manufecturer name is required</small>
-
-            </div>
-            <div *ngIf="productType.errors && productType.touched && form.submitted">
-                <small class="text-danger" *ngIf="productType.errors['required']"> Product Type is required</small>
-
-            </div>
-            <div *ngIf="costPrice.errors && costPrice.touched && form.submitted">
-                <small class="text-danger" *ngIf="costPrice.errors['required']"> Cost Price is required</small>
-                <small class="text-danger" *ngIf="costPrice.errors['pattern']"> Cost Price is not in format</small>
-            </div>
-            <div *ngIf="retailPrice.errors && retailPrice.touched && form.submitted">
-                <small class="text-danger" *ngIf="retailPrice.errors['required']"> Retail Price is required</small>
-                <small class="text-danger" *ngIf="retailPrice.errors['pattern']"> Retail Price is not in format</small>
-            </div>
-            <div class="mb-3">
-
-                <button mat-raised-button color="primary" type="submit">Update</button>
-            </div>
-
-        </form>
+                <div *ngIf="costPrice.errors && costPrice.touched && form.submitted">
+                    <small class="text-danger" *ngIf="costPrice.errors['required']"> Cost Price is required</small><sup
+                        class="ms-1 text-danger">*</sup>
+                    <small class="text-danger" *ngIf="costPrice.errors['pattern']"> Cost Price must contain number only</small><sup class="ms-1 text-danger">*</sup>
+                </div>
+                <div *ngIf="retailPrice.errors && retailPrice.touched && form.submitted">
+                    <small class="text-danger" *ngIf="retailPrice.errors['required']"> Retail Price is
+                        required</small><sup class="ms-1 text-danger">*</sup>
+                    <small class="text-danger" *ngIf="retailPrice.errors['pattern']"> Retail Price must contain number only</small><sup class="ms-1 text-danger">*</sup>
+                </div>
+                <div *ngIf="mfgDate.errors && mfgDate.touched && form.submitted">
+                    <small class="text-danger" *ngIf="mfgDate.errors['required']"> Manufracturing Date is
+                        required</small><sup class="ms-1 text-danger">*</sup>
+                </div>
+                <div *ngIf="exprDate.errors && exprDate.touched && form.submitted">
+                    <small class="text-danger" *ngIf="exprDate.errors['required']"> Expiry Date is required</small><sup
+                        class="ms-1 text-danger">*</sup>
+                </div>
+                <div class="mb-3" *ngIf="editMode">
+                    <button mat-raised-button color="primary" type="submit">Update</button>
+                </div>
+                <div class="mb-3" *ngIf="!editMode">
+                    <button mat-raised-button color="primary" type="submit">ADD</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

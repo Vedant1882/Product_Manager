@@ -7,12 +7,25 @@ import { AppConstants } from '../constants/app.constants';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent {
-  dateFormate=AppConstants.dateFormat;
-@Input() data:any=[];
-editData:any|undefined;
-@Output() newItemEvent = new EventEmitter<string>();
-edit(value: any) {
-  this.editData=value;
-  this.newItemEvent.emit(this.editData);
-}
+
+  @Input() data: any = [];
+  @Input() listHeader: any = [];
+  @Output() newItemEvent = new EventEmitter<string>();
+  @Output() newItemEvent1 = new EventEmitter<string>();
+  @Output() newItemEvent2 = new EventEmitter<string>();
+
+  editData: any | undefined;
+  dateFormate = AppConstants.dateFormat;
+
+  edit(value: any) {
+    this.editData = value;
+    this.newItemEvent.emit(this.editData);
+  }
+  delete(value: any) {
+    this.editData = value;
+    this.newItemEvent2.emit(this.editData.id);
+  }
+  add() {
+    this.newItemEvent1.emit();
+  }
 }

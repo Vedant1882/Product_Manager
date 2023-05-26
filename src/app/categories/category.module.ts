@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CategoryComponent } from './category/category.component';
 import { CategoryRoutingModule } from './category-routing.module';
+import { ListComponent } from '../common/list/list.component';
+import { ProductModule } from '../products/product.module';
 
 
 console.warn("loading")
@@ -10,7 +12,8 @@ console.warn("loading")
     
   ],
   imports: [
-  CategoryRoutingModule
+  CategoryRoutingModule,
+  ProductModule
   ],
  
 
