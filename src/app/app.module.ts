@@ -8,9 +8,7 @@ import { SidebarComponent } from './common/sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
-
+import { MaterialModule } from './common/material.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

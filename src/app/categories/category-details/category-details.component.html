@@ -1,0 +1,35 @@
+
+    <h1 class="text-success" *ngIf="editMode">Edit Category details</h1>
+    <h1 class="text-success" *ngIf="!editMode">Add Category details</h1>
+    <div class="row mt-4">
+        <form #form="ngForm" novalidate (ngSubmit)=" form.form.valid && save(form.value)">
+            <input type="hidden" value="">
+            <mat-form-field class="col-10">
+                <mat-label>Category Name</mat-label>
+                <input matInput id='categoryName' placeholder="Category Name...." [(ngModel)]="editObj.categoryName"
+                    name="categoryName" #categoryName="ngModel" required
+                    [ngClass]="{error:categoryName.errors && categoryName .touched && form.submitted}">
+            </mat-form-field>
+            <mat-form-field class="col-10">
+                <mat-label>Description</mat-label>
+                <input matInput id='description' placeholder="Description...." [(ngModel)]="editObj.description"
+                    name="description" #description="ngModel" required
+                    [ngClass]="{error:description.errors && description .touched && form.submitted}">
+            </mat-form-field>
+            <div *ngIf="categoryName.errors && categoryName.touched && form.submitted" class="col-10">
+                <small class="text-danger" *ngIf="categoryName.errors['required']"> Category Name is
+                    required</small><sup class="ms-1 text-danger">*</sup>
+            </div>
+            <div *ngIf="description.errors && description.touched && form.submitted">
+                <small class="text-danger" *ngIf="description.errors['required']"> Desscription name is
+                    required</small><sup class="ms-1 text-danger">*</sup>
+            </div>
+            <div class="mb-3" *ngIf="editMode">
+                <button mat-raised-button color="primary" type="submit">Update</button>
+            </div>
+            <div class="mb-3" *ngIf="!editMode">
+                <button mat-raised-button color="primary" type="submit">ADD</button>
+            </div>
+        </form>
+    </div>
+    

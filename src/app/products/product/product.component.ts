@@ -3,6 +3,10 @@ import { Product } from '../../models/product';
 import { AppConstants } from 'src/app/common/constants/app.constants';
 import { dataType } from 'src/app/common/Enum/dataType';
 import { ListDataObj } from 'src/app/models/ListDataObj';
+import { button } from 'src/app/models/buttons';
+import { PoductService} from 'src/app/common/services/product.service';
+import { Router } from '@angular/router';
+import { ToolBar } from 'src/app/models/toolbar';
 
 
 @Component({
@@ -16,6 +20,7 @@ export class ProductComponent {
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
+  constructor(private productService: PoductService,private router: Router) {}
   public editObj: Product = {
     id: 0,
     productName: "",
@@ -66,7 +71,7 @@ export class ProductComponent {
     fieldType: dataType.string
   },
   {
-    columnName: 'Id',
+    columnName: 'Retail Price',
     field: 'retailPrice',
     fieldType: dataType.string
   },
@@ -90,44 +95,49 @@ export class ProductComponent {
     field: 'imgUrl',
     fieldType: dataType.string
   },
-  ]
-  product: any = [{
-    id: 1,
-    productName: "First",
-    manufecturerName: "Ashok",
-    productType: "Abc",
-    costPrice: 50,
-    retailPrice: 90,
-    status: "Active",
-    mfgDate: new Date(),
-    exprDate: new Date(),
-    imgUrl: ""
-  },
-  {
-    id: 2,
-    productName: "Second",
-    manufecturerName: "Vedant",
-    productType: "Abc",
-    costPrice: 60,
-    retailPrice: 100,
-    status: "Inactive",
-    mfgDate: new Date(),
-    exprDate: new Date(),
-    imgUrl: ""
-  },
-  {
-    id: 3,
-    productName: "Third",
-    manufecturerName: "Naman",
-    productType: "Abc",
-    costPrice: 60,
-    retailPrice: 100,
-    status: "Active",
-    mfgDate: new Date(),
-    exprDate: new Date(),
-    imgUrl: ""
-  }];
+  ];
+  product:any[]=this.productService.getProduct();
+ 
 
+  button:button[]=[{
+    name:"Edit",
+    callBackFunction: (value: Product)  => this.editCallBack(value),
+    color:"primary"
+  },
+  {
+    name:"Delete",
+    callBackFunction:(value: Product) => this.deleteCallbackFunction(value),
+    color:"warn"
+  },
+];
+toolbar:ToolBar={
+  title:"Product" ,
+  btnArr:[]=[{
+    name:"Add",
+    callBackFunction: ()  => this.addCallBack(),
+    color:"primary"
+  }]
+};
+
+addCallBack = (): void => {
+  this.router.navigate(['product/add', '']);
+}
+editCallBack = (value:Product): void => {
+  this.router.navigate(['product/edit', value.id]);
+}
+deleteCallbackFunction = (value: Product): void => {
+  debugger;
+  this.product.forEach((element: Product) => {
+    if (element.id == value.id) {
+      debugger;
+      const index = this.product.indexOf(element);
+      //console.log(index);
+      if (index !== -1) {
+        this.product.splice(index, 1);
+      }
+    }
+  });
+  }
   addItem(newItem: any) {
     this.product.forEach((element: Product) => {
       if (element.id == newItem.id) {
@@ -138,17 +148,22 @@ export class ProductComponent {
     });
   }
   deleteItem(newItem: any) {
+    debugger;
     this.product.forEach((element: Product) => {
       if (element.id == newItem) {
         const index = this.product.indexOf(element);
         console.log(index);
         if (index !== -1) {
           this.product.splice(index, 1);
+          console.log('Deleted Obj' + element.id + ' ' + element.productName)
         }
       }
     });
+    this.mode = false;
   }
   addProduct() {
+    console.log('add event emitted.');
+
     Object.assign(this.editObj, this.addObj);
     this.editMode = false;
     this.mode = true;
@@ -156,8 +171,10 @@ export class ProductComponent {
 
   save(item: any) {
     if (this.editObj.id == 0 || this.editObj.id == null) {
+      console.log(item)
       this.product.push(item);
       this.addMode = false;
+      console.log('add event emitted.');
     }
     else {
       if (this.form.valid) {
@@ -178,5 +195,6 @@ export class ProductComponent {
     }
     this.mode = false;
   }
+  
 }
 
