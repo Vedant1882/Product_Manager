@@ -1,11 +1,13 @@
-<app-header class="d-none d-md-block"></app-header>
+<app-header class="d-none d-md-block" [token]="token"></app-header>
 
 <div class="row">
-    <div class="d-none col-2 d-md-block" style="background-color: rgb(160, 160, 180); height: 91vh;">
+    <div class="d-none col-2 d-md-block" style="background-color: rgb(160, 160, 180); height: 91vh;"
+        *ngIf="tokenHelperService.isLogin">
         <app-sidebar></app-sidebar>
     </div>
 
-    <div class="col-12 col-md-10 mt-5">
+    <div class="col-12 col-md-10 mt-5"
+        [ngClass]="{'col-md-10':tokenHelperService.isLogin,'col-md-12':!tokenHelperService.isLogin}">
         <div class="container">
             <router-outlet></router-outlet>
         </div>

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { dataType } from 'src/app/common/Enum/dataType';
 import { AppConstants } from 'src/app/common/constants/app.constants';
@@ -7,6 +8,8 @@ import { ListDataObj } from 'src/app/models/ListDataObj';
 import { button } from 'src/app/models/buttons';
 import { category } from 'src/app/models/category';
 import { ToolBar } from 'src/app/models/toolbar';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-category',
@@ -20,17 +23,21 @@ export class CategoryComponent {
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
-  
+  category:category[];
   public editObj: category = {
-    id: 0,
-    categoryName: "",
-    description: "",
+    
+      createdAt: new Date(),
+      createdById: 0,
+      updatedAt: new Date(),
+      updatedById: 0,
+      deletedAt: new Date(),
+      deletedById: 0,
+      id: 0,
+      name: "",
+      description: ""
+    
   };
-  public addObj: category = {
-    id: 0,
-    categoryName: "",
-    description: "",
-  };
+  
   constructor(private categoryService: CategoryService,private router: Router) {}
 
   listHeader: ListDataObj[] = [{
@@ -40,7 +47,7 @@ export class CategoryComponent {
   },
   {
     columnName: 'Category Name',
-    field: 'categoryName',
+    field: 'name',
     fieldType: dataType.string
   },
   {
@@ -69,31 +76,31 @@ toolbar:ToolBar={
   }
   ]};
 
-   
+  ngOnInit(): void {
+    this.categoryService.getCategory().subscribe({
+      next: (value: any) => {
+        debugger;
+        this.category = value;
+      },
+      error(msg) {
+        alert(msg);
+      }
+    });
+console.log(this.category)
+  }
 addCallBack = (): void => {
   this.router.navigate(['category/add', '']);
 }
-  category:category[]=this.categoryService.getCategory();
+ 
 
   editCallBack = (value:category): void => {
-    debugger;
     this.router.navigate(['category/edit', value.id]);
   }
 
   deleteCallbackFunction = (value: category): void => {
-    debugger;
-    this.category.forEach((element: category) => {
-      if (element.id == value.id) {
-        debugger;
-        const index = this.category.indexOf(element);
-        //console.log(index);
-        if (index !== -1) {
-          this.category.splice(index, 1);
-        }
-      }
-    });
+    
+        this.categoryService.deleteCategory(value.id).subscribe();
     }
-
 }
 
 

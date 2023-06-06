@@ -33,7 +33,6 @@ export class ProductDetailsComponent {
   ngOnInit() {
     this.route.params.subscribe(params=> {
       this.productId = params['id'];
-     console.log(this.productId);
     });
     if(Number(this.productId) > 0){
       this.editObj=this.productService.viewData(this.productId);

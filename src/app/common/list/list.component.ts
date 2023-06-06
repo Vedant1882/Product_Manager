@@ -39,7 +39,6 @@ export class ListComponent implements OnInit {
     this.button.forEach((x: any) => {
       this.displayedColumns.push(x.name);
     });
-    console.log(this.toolBar);
 
   }
   add() {

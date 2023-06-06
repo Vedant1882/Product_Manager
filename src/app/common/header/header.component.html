@@ -1,5 +1,17 @@
-
 <nav class="navbar navbar-light" style="background-color: rgb(160, 160, 180);">
-    <a class="navbar-brand ms-3 text-danger"><h1>Project Manager</h1></a>
-    <img width="50" height="50" src="https://img.icons8.com/ios/50/settings--v1.png" alt="settings--v1" class="me-3"/>
+    <a class="navbar-brand ms-3">
+        <h1>Product Manager</h1>
+    </a>
+    <div *ngIf="!tokenHelperService.isLogin" class="d-flex">
+        <div class="mb-3 me-2">
+            <button mat-raised-button color="primary" routerLink="/login">Login</button>
+        </div>
+        <div class="mb-3 me-2">
+            <button mat-raised-button color="primary" routerLink="/register">Register</button>
+        </div>
+    </div>
+    <div *ngIf="tokenHelperService.isLogin" width="50" height="50" class="me-3">
+        <img src="https://img.icons8.com/ios/50/settings--v1.png" alt="settings--v1" class="pointer"/>
+        <mat-icon *ngIf="tokenHelperService.isLogin" (click)="logOut()" class="pointer">exit_to_app</mat-icon>
+    </div>
 </nav>

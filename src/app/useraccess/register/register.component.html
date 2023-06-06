@@ -1,0 +1,106 @@
+<div class="text-center">
+
+    <h1>Register to product managaer</h1>
+
+    <form #form="ngForm" novalidate (ngSubmit)=" form.form.valid && saveUser(form.value)">
+
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>First name</mat-label>
+            <input matInput placeholder="enter First name" id="firstName" [(ngModel)]="usersObj.firstName"
+                name="firstName" #firstName="ngModel" required
+                [ngClass]="{error:firstName.errors && firstName.touched && form.submitted}">
+        </mat-form-field><br>
+
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="enter Last Name" id="lastName" [(ngModel)]="usersObj.lastName" name="lastName"
+                #lastName="ngModel" required [ngClass]="{error:lastName.errors && lastName.touched && form.submitted}">
+        </mat-form-field><br>
+
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="enter Email" id="firstName" [(ngModel)]="usersObj.email" name="email"
+                #email="ngModel" required [pattern]="emailRegex"
+                [ngClass]="{error:email.errors && email.touched && form.submitted}">
+        </mat-form-field><br>
+
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="enter Password" id="password" [(ngModel)]="usersObj.password" name="password"
+                #password="ngModel" required type="password" [pattern]="passwordRegex"
+                [ngClass]="{error:password.errors && password.touched && form.submitted}">
+        </mat-form-field><br>
+
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput placeholder="Confirm Password" id="confirmpassword" [(ngModel)]="usersObj.confirmpassword"
+                name="confirmpassword" #confirmpassword="ngModel" required type="password" [pattern]="usersObj.password"
+                [ngClass]="{error:confirmpassword.errors && confirmpassword.touched && form.submitted}">
+        </mat-form-field><br>
+
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder="enter Phone Number" type="number" id="phoneNumber"
+                [(ngModel)]="usersObj.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" required
+                [ngClass]="{error:phoneNumber.errors && phoneNumber .touched && form.submitted}">
+        </mat-form-field><br>
+
+        <mat-form-field style="width:50%">
+            <mat-label>Address</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" id="address" [(ngModel)]="usersObj.address" name="address" #address="ngModel"
+                required placeholder="enter Address"
+                [ngClass]="{error:address.errors && address .touched && form.submitted}"></textarea>
+        </mat-form-field><br>
+
+        <div *ngIf="firstName.errors  && form.submitted">
+            <small class="text-danger" *ngIf="firstName.errors['required']"> First Name is
+                required</small><sup class="ms-1 text-danger">*</sup>
+        </div>
+
+        <div *ngIf="lastName.errors && form.submitted">
+            <small class="text-danger" *ngIf="lastName.errors['required']"> Last name is
+                required</small><sup class="ms-1 text-danger">*</sup>
+        </div>
+
+        <div *ngIf="password.errors  && form.submitted">
+            <small class="text-danger" *ngIf="password.errors['required']"> Password is
+                required</small><sup class="ms-1 text-danger">*</sup>
+                <small class="text-danger" *ngIf="password.errors['pattern']"> Password must contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character: <sup
+                    class="ms-1 text-danger">*</sup></small>
+        </div>
+
+        <div *ngIf="confirmpassword.errors  && form.submitted">
+            <small class="text-danger" *ngIf="confirmpassword.errors['required']"> Password is
+                required</small><sup class="ms-1 text-danger">*</sup>
+            <small class="text-danger" *ngIf="confirmpassword.errors['pattern']"> Password and confirm password must be
+                same<sup class="ms-1 text-danger">*</sup></small>
+        </div>
+
+        <div *ngIf="phoneNumber.errors  && form.submitted">
+            <small class="text-danger" *ngIf="phoneNumber.errors['required']"> Phone number is required <sup
+                    class="ms-1 text-danger">*</sup></small>
+            <small class="text-danger" *ngIf="phoneNumber.errors['pattern']"> Phone number must be 10 degits <sup
+                    class="ms-1 text-danger">*</sup></small>
+        </div>
+
+        <div *ngIf="address.errors && form.submitted">
+            <small class="text-danger" *ngIf="address.errors['required']"> Address is
+                required</small><sup class="ms-1 text-danger">*</sup>
+        </div>
+
+        <div *ngIf="email.errors && form.submitted">
+            <small class="text-danger" *ngIf="email.errors['required']"> Email is
+                required <sup class="ms-1 text-danger">*</sup></small>
+            <small class="text-danger" *ngIf="email.errors['pattern']"> Email is not valid <sup
+                    class="ms-1 text-danger">*</sup></small>
+        </div>
+
+        <div class="mb-3">
+            <button mat-raised-button color="primary" type="submit">Register</button>
+        </div>
+
+    </form>
+    <a href="/login" class="text-success">Login</a><br>
+    <a href="/dashboard" class="text-success">dashboard</a>
+</div>

@@ -1,0 +1,31 @@
+<div class="text-center">
+    <form #form="ngForm" novalidate (ngSubmit)=" form.form.valid && login(form.value)">
+        <h1>Login to product managaer</h1>
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>email</mat-label>
+            <input matInput placeholder="enter user name" id="email" [(ngModel)]="loginObj.email"
+            name="email" #email="ngModel" required
+            [ngClass]="{error:email.errors && email.touched && form.submitted}">
+        </mat-form-field><br>
+        <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="enter Password" type="password" id="password" [(ngModel)]="loginObj.password"
+            name="password" #password="ngModel" required
+            [ngClass]="{error:password.errors && password.touched && form.submitted}">
+        </mat-form-field><br>
+        <div *ngIf="email.errors  && form.submitted">
+            <small class="text-danger" *ngIf="email.errors['required']"> Email is
+                required</small><sup class="ms-1 text-danger">*</sup>
+        </div>
+
+        <div *ngIf="password.errors && form.submitted">
+            <small class="text-danger" *ngIf="password.errors['required']"> Password is
+                required</small><sup class="ms-1 text-danger">*</sup>
+        </div>
+        <div class="mb-3">
+            <button mat-raised-button color="primary" type="submit">Login</button>
+        </div>
+    </form>
+    <a href="/register" class="text-success">Register</a><br>
+    <a href="/dashboard" class="text-success">dashboard</a>
+</div>

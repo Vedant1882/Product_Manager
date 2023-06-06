@@ -12,15 +12,17 @@ export class CategoryDetailsComponent {
   @ViewChild('form') form: any;
   editMode: boolean = false;
   public editObj: category = {
+    createdAt: new Date(),
+    createdById: 0,
+    updatedAt: new Date(),
+    updatedById: 0,
+    deletedAt: new Date(),
+    deletedById: 0,
     id: 0,
-    categoryName: "",
-    description: "",
+    name: "",
+    description: ""
   };
-  public addObj: category = {
-    id: 0,
-    categoryName: "",
-    description: "",
-  };
+ 
   categoryId=0;
   constructor(private categoryService: CategoryService,private router:Router,private route: ActivatedRoute) {}
  
@@ -28,25 +30,20 @@ export class CategoryDetailsComponent {
 ngOnInit() {
   this.route.params.subscribe(params => {
     this.categoryId = params['id'];
-   console.log(this.categoryId);
   });
   if(Number(this.categoryId) > 0){
-    this.editObj=this.categoryService.viewData(this.categoryId);
-    this.editMode=true;
+    this.categoryService.getCategoryById(this.categoryId).subscribe({
+      next: (value: any) => {
+        this.editObj.name = value.name;
+        this.editObj.description=value.description;
+        this.editObj.id=value.id;
+      },
+    })
   }
 }
 
-  save(item: any) {
-    if (this.editObj.id == 0 || this.editObj.id == null) {
-      this.categoryService.addCategory(item);
+  save(item: category) {
+      this.categoryService.saveCategory(item).subscribe();
       this.router.navigate(['/category']);
-    }
-    else {
-      if (this.form.valid) {
-        this.categoryService.editCategory(this.editObj);
-        this.router.navigate(['/category']);
-      }
-    }
-    
   }
 }

@@ -126,12 +126,9 @@ editCallBack = (value:Product): void => {
   this.router.navigate(['product/edit', value.id]);
 }
 deleteCallbackFunction = (value: Product): void => {
-  debugger;
   this.product.forEach((element: Product) => {
     if (element.id == value.id) {
-      debugger;
       const index = this.product.indexOf(element);
-      //console.log(index);
       if (index !== -1) {
         this.product.splice(index, 1);
       }
@@ -148,21 +145,17 @@ deleteCallbackFunction = (value: Product): void => {
     });
   }
   deleteItem(newItem: any) {
-    debugger;
     this.product.forEach((element: Product) => {
       if (element.id == newItem) {
         const index = this.product.indexOf(element);
-        console.log(index);
         if (index !== -1) {
           this.product.splice(index, 1);
-          console.log('Deleted Obj' + element.id + ' ' + element.productName)
         }
       }
     });
     this.mode = false;
   }
   addProduct() {
-    console.log('add event emitted.');
 
     Object.assign(this.editObj, this.addObj);
     this.editMode = false;
@@ -171,10 +164,8 @@ deleteCallbackFunction = (value: Product): void => {
 
   save(item: any) {
     if (this.editObj.id == 0 || this.editObj.id == null) {
-      console.log(item)
       this.product.push(item);
       this.addMode = false;
-      console.log('add event emitted.');
     }
     else {
       if (this.form.valid) {

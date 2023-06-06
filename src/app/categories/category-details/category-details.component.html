@@ -3,11 +3,13 @@
     <h1 class="text-success" *ngIf="!editMode">Add Category details</h1>
     <div class="row mt-4">
         <form #form="ngForm" novalidate (ngSubmit)=" form.form.valid && save(form.value)">
-            <input type="hidden" value="">
+            <input type="hidden" id='id' placeholder="Category Name...." [(ngModel)]="editObj.id"
+            name="id" #id="ngModel">
+       
             <mat-form-field class="col-10">
                 <mat-label>Category Name</mat-label>
-                <input matInput id='categoryName' placeholder="Category Name...." [(ngModel)]="editObj.categoryName"
-                    name="categoryName" #categoryName="ngModel" required
+                <input matInput id='categoryName' placeholder="Category Name...." [(ngModel)]="editObj.name"
+                    name="name" #categoryName="ngModel" required
                     [ngClass]="{error:categoryName.errors && categoryName .touched && form.submitted}">
             </mat-form-field>
             <mat-form-field class="col-10">
