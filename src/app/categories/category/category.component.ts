@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { dataType } from 'src/app/common/Enum/dataType';
 import { AppConstants } from 'src/app/common/constants/app.constants';
 import { CategoryService } from 'src/app/common/services/category.service';
+import { DialogueBoxComponent } from 'src/app/dialogue-box/dialogue-box.component';
 import { ListDataObj } from 'src/app/models/ListDataObj';
 import { button } from 'src/app/models/buttons';
 import { category } from 'src/app/models/category';
@@ -23,22 +25,22 @@ export class CategoryComponent {
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
-  category:category[];
+  category: category[];
   public editObj: category = {
-    
-      createdAt: new Date(),
-      createdById: 0,
-      updatedAt: new Date(),
-      updatedById: 0,
-      deletedAt: new Date(),
-      deletedById: 0,
-      id: 0,
-      name: "",
-      description: ""
-    
+
+    createdAt: new Date(),
+    createdById: 0,
+    updatedAt: new Date(),
+    updatedById: 0,
+    deletedAt: new Date(),
+    deletedById: 0,
+    id: 0,
+    name: "",
+    description: ""
+
   };
-  
-  constructor(private categoryService: CategoryService,private router: Router) {}
+
+  constructor(private categoryService: CategoryService, private router: Router, public dialog: MatDialog, readonly snackBar: MatSnackBar) { }
 
   listHeader: ListDataObj[] = [{
     columnName: 'Id',
@@ -56,25 +58,26 @@ export class CategoryComponent {
     fieldType: dataType.string
   },
   ];
-  buttons:button[]=[{
-    name:"Edit",
-    callBackFunction: (value: category)  => this.editCallBack(value),
-    color:"primary"
+  buttons: button[] = [{
+    name: "Edit",
+    callBackFunction: (value: category) => this.editCallBack(value),
+    color: "primary"
   },
   {
-    name:"Delete",
-    callBackFunction:(value: category) => this.deleteCallbackFunction(value),
-    color:"warn"
+    name: "Delete",
+    callBackFunction: (value: category) => this.deleteCallbackFunction(value),
+    color: "warn"
   },
-];
-toolbar:ToolBar={
-  title:"Category" ,
-  btnArr:[]=[{
-    name:"Add",
-    callBackFunction: ()  => this.addCallBack(),
-    color:"primary"
-  }
-  ]};
+  ];
+  toolbar: ToolBar = {
+    title: "Category",
+    btnArr: [] = [{
+      name: "Add",
+      callBackFunction: () => this.addCallBack(),
+      color: "primary"
+    }
+    ]
+  };
 
   ngOnInit(): void {
     this.categoryService.getCategory().subscribe({
@@ -86,21 +89,35 @@ toolbar:ToolBar={
         alert(msg);
       }
     });
-console.log(this.category)
+    console.log(this.category)
   }
-addCallBack = (): void => {
-  this.router.navigate(['category/add', '']);
-}
- 
+  addCallBack = (): void => {
+    this.router.navigate(['category/add', '']);
+  }
 
-  editCallBack = (value:category): void => {
+
+  editCallBack = (value: category): void => {
     this.router.navigate(['category/edit', value.id]);
   }
 
   deleteCallbackFunction = (value: category): void => {
-    
-        this.categoryService.deleteCategory(value.id).subscribe();
-    }
+    const dialogRef = this.dialog.open(DialogueBoxComponent, {
+      width: '250px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.categoryService.deleteCategory(value.id).subscribe({
+          next: (value: any) => {
+              this.snackBar.open("Deleted Succesfully", 'Close', {
+                duration: 3000,
+              });
+          },
+        }
+        );
+      }
+    });
+    this.router.navigate(['category','']);
+  }
 }
 
 

@@ -23,7 +23,6 @@ export class ListComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<string>();
   @Output() newItemEvent1 = new EventEmitter<string>();
   @Output() newItemEvent2 = new EventEmitter<string>();
-
   editData: any | undefined;
   dataType = dataType;
   dateFormate = AppConstants.dateFormat;

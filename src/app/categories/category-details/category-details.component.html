@@ -15,7 +15,7 @@
             <mat-form-field class="col-10">
                 <mat-label>Description</mat-label>
                 <input matInput id='description' placeholder="Description...." [(ngModel)]="editObj.description"
-                    name="description" #description="ngModel" required
+                    name="description" #description="ngModel" required 
                     [ngClass]="{error:description.errors && description .touched && form.submitted}">
             </mat-form-field>
             <div *ngIf="categoryName.errors && categoryName.touched && form.submitted" class="col-10">

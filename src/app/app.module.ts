@@ -14,6 +14,7 @@ import { RegisterComponent } from './useraccess/register/register.component';
 import { ErrorCatchingInterceptor } from './interceptors/error-catching.interceptor';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthInterceptor } from './interceptors/authInterceptor';
+import { DialogueBoxComponent } from './dialogue-box/dialogue-box.component';
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import { AuthInterceptor } from './interceptors/authInterceptor';
     SidebarComponent,
     DashboardComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    DialogueBoxComponent,
+
   ],
   imports: [
     BrowserModule,
