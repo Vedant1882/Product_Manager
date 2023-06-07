@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ListComponent } from 'src/app/common/list/list.component';
 import { CategoryService } from 'src/app/common/services/category.service';
 import { category } from 'src/app/models/category';
 
@@ -10,6 +11,7 @@ import { category } from 'src/app/models/category';
 })
 export class CategoryDetailsComponent {
   @ViewChild('form') form: any;
+  @ViewChild(ListComponent) grid: ListComponent;
   editMode: boolean = false;
   public editObj: category = {
     createdAt: new Date(),
@@ -37,6 +39,7 @@ ngOnInit() {
         this.editObj.name = value.name;
         this.editObj.description=value.description;
         this.editObj.id=value.id;
+        this.editMode=true;
       },
     })
   }
@@ -45,5 +48,6 @@ ngOnInit() {
   save(item: category) {
       this.categoryService.saveCategory(item).subscribe();
       this.router.navigate(['/category']);
+      this.grid.refresh()
   }
 }

@@ -14,15 +14,12 @@ import { dataType } from '../Enum/dataType';
 export class ListComponent implements OnInit {
 
 
-  @Input() data: any;// = new MatTableDataSource();
+  @Input() data: any;
   @Input() listType: any = [];
   @Input() listHeader: any = [];
   @Input() button: any = [];
   @Input() toolBar: any = [];
-  @Input() dataCallBack:any
-  @Output() newItemEvent = new EventEmitter<string>();
-  @Output() newItemEvent1 = new EventEmitter<string>();
-  @Output() newItemEvent2 = new EventEmitter<string>();
+  @Input() dataCallBack:any;
   editData: any | undefined;
   dataType = dataType;
   dateFormate = AppConstants.dateFormat;
@@ -32,7 +29,6 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.dataCallBack.subscribe({
       next: (value: any) => {
-        debugger;
         this.dataSource = value;
       },
       error(msg:any) {

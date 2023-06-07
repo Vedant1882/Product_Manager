@@ -45,7 +45,6 @@ export class CategoryComponent {
   };
 
   constructor(private categoryService: CategoryService, private router: Router, public dialog: MatDialog, readonly snackBar: MatSnackBar) { 
-    this.category = () => this.categoryService.getCategory();
   }
 
   listHeader: ListDataObj[] = [{

@@ -1,12 +1,14 @@
 export interface Product{
     id:number;
     productName:string;
-    manufecturerName:string;
+    manufrecturerName:string;
     productType:string;
     costPrice:number;
     retailPrice:number;
-    status:string;
-    mfgDate:Date;
-    exprDate:Date;
-    imgUrl:string
+    categoryId:number;
+    status?:boolean;
+    manufrecturingDate:Date;
+    expiryDate:Date;
+    imageUrl:string;
+    name:string
   }

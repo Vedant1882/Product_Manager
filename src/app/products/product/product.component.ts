@@ -7,6 +7,10 @@ import { button } from 'src/app/models/buttons';
 import { PoductService} from 'src/app/common/services/product.service';
 import { Router } from '@angular/router';
 import { ToolBar } from 'src/app/models/toolbar';
+import { ListComponent } from 'src/app/common/list/list.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogueBoxComponent } from 'src/app/dialogue-box/dialogue-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -16,34 +20,24 @@ import { ToolBar } from 'src/app/models/toolbar';
 })
 export class ProductComponent {
   @ViewChild('form') form: any;
+  @ViewChild(ListComponent) grid: ListComponent;
   editMode: boolean = false;
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
-  constructor(private productService: PoductService,private router: Router) {}
+  constructor(private productService: PoductService,private router: Router,readonly snackBar: MatSnackBar,public dialog: MatDialog) {}
   public editObj: Product = {
     id: 0,
     productName: "",
-    manufecturerName: "",
+    manufrecturerName: "",
     productType: "",
     costPrice: 0,
     retailPrice: 0,
-    status: "",
-    mfgDate: new Date(),
-    exprDate: new Date(),
-    imgUrl: ""
-  };
-  public addObj: Product = {
-    id: 0,
-    productName: "",
-    manufecturerName: "",
-    productType: "",
-    costPrice: 0,
-    retailPrice: 0,
-    status: "",
-    mfgDate: new Date(),
-    exprDate: new Date(),
-    imgUrl: ""
+    categoryId:0,
+    manufrecturingDate: new Date(),
+    expiryDate: new Date(),
+    imageUrl: "",
+    name:""
   };
   listHeader: ListDataObj[] = [{
     columnName: 'Id',
@@ -57,7 +51,7 @@ export class ProductComponent {
   },
   {
     columnName: 'Manufracturer Name',
-    field: 'manufecturerName',
+    field: 'manufrecturerName',
     fieldType: dataType.string
   },
   {
@@ -82,12 +76,12 @@ export class ProductComponent {
   },
   {
     columnName: 'Manufrecturing Date',
-    field: 'mfgDate',
+    field: 'manufrecturingDate',
     fieldType: dataType.date
   },
   {
     columnName: 'Expiry Date',
-    field: 'exprDate',
+    field: 'expiryDate',
     fieldType: dataType.date
   },
   {
@@ -95,8 +89,13 @@ export class ProductComponent {
     field: 'imgUrl',
     fieldType: dataType.string
   },
+  {
+    columnName: 'Category Name',
+    field: 'name',
+    fieldType: dataType.string
+  },
   ];
-  product:any[]=this.productService.getProduct();
+  
  
 
   button:button[]=[{
@@ -118,74 +117,46 @@ toolbar:ToolBar={
     color:"primary"
   }]
 };
-
+dataCallBack(){
+  return this.productService.getProduct();
+}
 addCallBack = (): void => {
   this.router.navigate(['product/add', '']);
 }
-editCallBack = (value:Product): void => {
+editCallBack = (value: Product): void => {
   this.router.navigate(['product/edit', value.id]);
 }
 deleteCallbackFunction = (value: Product): void => {
-  this.product.forEach((element: Product) => {
-    if (element.id == value.id) {
-      const index = this.product.indexOf(element);
-      if (index !== -1) {
-        this.product.splice(index, 1);
+  const dialogRef = this.dialog.open(DialogueBoxComponent, {
+    width: '250px',
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.productService.deleteProduct(value.id).subscribe({
+        next: (value: any) => {
+          this.snackBar.open("Deleted Succesfully", 'Close', {
+            duration: 3000,
+          });
+          if (value) {
+            this.grid.refresh();
+          }
+        },
       }
+      );
     }
   });
-  }
-  addItem(newItem: any) {
-    this.product.forEach((element: Product) => {
-      if (element.id == newItem.id) {
-        Object.assign(this.editObj, element);
-        this.editMode = true;
-        this.mode = true;
-      }
-    });
-  }
-  deleteItem(newItem: any) {
-    this.product.forEach((element: Product) => {
-      if (element.id == newItem) {
-        const index = this.product.indexOf(element);
-        if (index !== -1) {
-          this.product.splice(index, 1);
-        }
-      }
-    });
-    this.mode = false;
-  }
-  addProduct() {
+}
+// deleteCallbackFunction = (value: Product): void => {
+//   this.product.forEach((element: Product) => {
+//     if (element.id == value.id) {
+//       const index = this.product.indexOf(element);
+//       if (index !== -1) {
+//         this.product.splice(index, 1);
+//       }
+//     }
+//   });
+//   }
 
-    Object.assign(this.editObj, this.addObj);
-    this.editMode = false;
-    this.mode = true;
-  }
-
-  save(item: any) {
-    if (this.editObj.id == 0 || this.editObj.id == null) {
-      this.product.push(item);
-      this.addMode = false;
-    }
-    else {
-      if (this.form.valid) {
-        this.product.forEach((element: Product) => {
-          if (element.id == this.editObj.id) {
-            element.costPrice = this.editObj.costPrice;
-            element.manufecturerName = this.editObj.manufecturerName;
-            element.productName = this.editObj.productName;
-            element.productType = this.editObj.productType;
-            element.retailPrice = this.editObj.retailPrice;
-            element.mfgDate = this.editObj.mfgDate;
-            element.exprDate = this.editObj.exprDate;
-            element.status = this.editObj.status;
-            this.editMode = false;
-          }
-        });
-      }
-    }
-    this.mode = false;
-  }
   
 }
 
