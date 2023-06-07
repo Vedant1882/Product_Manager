@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppConstants } from '../constants/app.constants';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatTableModule } from '@angular/material/table'
 import { Router } from '@angular/router';
 import { dataType } from '../Enum/dataType';
 
@@ -15,7 +14,7 @@ import { dataType } from '../Enum/dataType';
 export class ListComponent implements OnInit {
 
 
-  @Input() data: any = [];// = new MatTableDataSource();
+  @Input() data: any;// = new MatTableDataSource();
   @Input() listType: any = [];
   @Input() listHeader: any = [];
   @Input() button: any = [];
@@ -27,11 +26,19 @@ export class ListComponent implements OnInit {
   editData: any | undefined;
   dataType = dataType;
   dateFormate = AppConstants.dateFormat;
-  dataSource = new MatTableDataSource(this.data);
+  dataSource = new MatTableDataSource();
   public displayedColumns: any = [];
   constructor(private router: Router) { }
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.data);
+    this.dataSource = new MatTableDataSource(this.dataCallBack.subscribe({
+      next: (value: any) => {
+        debugger;
+        this.dataSource = value;
+      },
+      error(msg:any) {
+        alert(msg);
+      }
+    }));
     this.displayedColumns = [];
     this.listHeader.forEach((x: any) => {
       this.displayedColumns.push(x.columnName);
@@ -39,13 +46,8 @@ export class ListComponent implements OnInit {
     this.button.forEach((x: any) => {
       this.displayedColumns.push(x.name);
     });
-
   }
-  
-  refresh(categories?: any) {
-    if(categories){
-      this.dataSource = new MatTableDataSource(categories);
-    }
-    // this.ngOnInit();
+  refresh() {
+    this.ngOnInit();
   }
 }

@@ -15,7 +15,7 @@
             <mat-form-field class="col-10">
                 <mat-label>Description</mat-label>
                 <input matInput id='description' placeholder="Description...." [(ngModel)]="editObj.description"
-                    name="description" #description="ngModel" required 
+                    name="description" #description="ngModel" required [minlength]="10"
                     [ngClass]="{error:description.errors && description .touched && form.submitted}">
             </mat-form-field>
             <div *ngIf="categoryName.errors && categoryName.touched && form.submitted" class="col-10">
@@ -25,6 +25,7 @@
             <div *ngIf="description.errors && description.touched && form.submitted">
                 <small class="text-danger" *ngIf="description.errors['required']"> Desscription name is
                     required</small><sup class="ms-1 text-danger">*</sup>
+                    <small class="text-danger" *ngIf="description.errors['minlength']"> Desscription must be 10 charecters long</small><sup class="ms-1 text-danger">*</sup>
             </div>
             <div class="mb-3" *ngIf="editMode">
                 <button mat-raised-button color="primary" type="submit">Update</button>
@@ -32,6 +33,7 @@
             <div class="mb-3" *ngIf="!editMode">
                 <button mat-raised-button color="primary" type="submit">ADD</button>
             </div>
+            
         </form>
     </div>
     

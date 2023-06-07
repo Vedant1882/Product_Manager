@@ -29,7 +29,7 @@ export class CategoryComponent {
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
-  category: category[];
+  category: any;
   public editObj: category = {
 
     createdAt: new Date(),
@@ -44,7 +44,9 @@ export class CategoryComponent {
 
   };
 
-  constructor(private categoryService: CategoryService, private router: Router, public dialog: MatDialog, readonly snackBar: MatSnackBar) { }
+  constructor(private categoryService: CategoryService, private router: Router, public dialog: MatDialog, readonly snackBar: MatSnackBar) { 
+    this.category = () => this.categoryService.getCategory();
+  }
 
   listHeader: ListDataObj[] = [{
     columnName: 'Id',
@@ -85,24 +87,13 @@ export class CategoryComponent {
 
 
   ngOnInit(): void {
-    this.getData();
   }
-  getData() {
-    this.categoryService.getCategory().subscribe({
-      next: (value: any) => {
-        debugger;
-        this.category = value;
-        this.grid.refresh(this.category);
-      },
-      error(msg) {
-        alert(msg);
-      }
-    });
+  dataCallBack(){
+    return this.categoryService.getCategory();
   }
   addCallBack = (): void => {
     this.router.navigate(['category/add', '']);
   }
-
 
   editCallBack = (value: category): void => {
     this.router.navigate(['category/edit', value.id]);
@@ -120,7 +111,7 @@ export class CategoryComponent {
               duration: 3000,
             });
             if (value) {
-              this.getData();
+              this.grid.refresh();
             }
           },
         }
