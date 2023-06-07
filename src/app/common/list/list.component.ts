@@ -20,6 +20,7 @@ export class ListComponent implements OnInit {
   @Input() listHeader: any = [];
   @Input() button: any = [];
   @Input() toolBar: any = [];
+  @Input() dataCallBack:any
   @Output() newItemEvent = new EventEmitter<string>();
   @Output() newItemEvent1 = new EventEmitter<string>();
   @Output() newItemEvent2 = new EventEmitter<string>();
@@ -40,12 +41,11 @@ export class ListComponent implements OnInit {
     });
 
   }
-  add() {
-    this.newItemEvent1.emit();
-    this.ngOnInit();
-    this.router.navigate(['category/add', '']);
-  }
-  refresh() {
-    this.ngOnInit();
+  
+  refresh(categories?: any) {
+    if(categories){
+      this.dataSource = new MatTableDataSource(categories);
+    }
+    // this.ngOnInit();
   }
 }

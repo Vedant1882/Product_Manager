@@ -14,39 +14,12 @@ export class CategoryService {
   catId: number;
   constructor(private http: HttpClient) { }
 
-  getCategory() {
+  getCategory(): Observable<category>{
     return this.http.get<any>(this.baseUrl + 'getCategory');
   }
   getCategoryById(id: number) {
     return this.http.get<any>(this.baseUrl + 'getCategoryById/' + id);
   }
-  // addCategory(item:any){
-  //   this.category.forEach((element: category) => {
-  //     if (element.id > this.index) {
-  //         this.index = element.id;
-  //     }
-  // });
-  // item.id = this.index + 1;
-  //   this.category.push(item);
-  // }
-  // viewData(id:any){
-
-  //   this.category.forEach((element: category) => {
-  //     if (element.id == id) {
-  //       Object.assign(this.editObj, element);
-  //     }
-  //   });
-  //   return this.editObj;
-  // }
-  // editCategory(editObj:category){
-  //   this.category.forEach((element: category) => {
-  //           if (element.id == this.editObj.id) {
-  //             element.categoryName = this.editObj.categoryName;
-  //             element.description = this.editObj.description;
-
-  //           }
-  //         });
-  // }
   saveCategory(category: category): Observable<category> {
     return this.http.post<category>(this.baseUrl + 'save', category);
   }
