@@ -24,7 +24,6 @@ export class CategoryService {
     return this.http.post<category>(this.baseUrl + 'save', category);
   }
   deleteCategory(id: number) {
-    console.log(id);
     return this.http.get<category>(this.baseUrl + 'deleteCategory/'+id);
   }
 }

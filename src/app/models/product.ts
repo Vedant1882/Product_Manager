@@ -10,5 +10,5 @@ export interface Product{
     manufrecturingDate:Date;
     expiryDate:Date;
     imageUrl:string;
-    name:string
+    name:string;
   }

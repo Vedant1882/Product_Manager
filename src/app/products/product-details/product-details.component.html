@@ -13,8 +13,8 @@
                 </mat-form-field>
                 <mat-radio-group aria-label="Select an option" class="d-flex" required [(ngModel)]="editObj.status"
                     name="status" #status="ngModel">
-                    <mat-radio-button value=true> <span class="text-success">Active</span></mat-radio-button>
-                    <mat-radio-button value=false><span class="text-danger">Inactive</span></mat-radio-button>
+                    <mat-radio-button value=0> <span class="text-success">Active</span></mat-radio-button>
+                    <mat-radio-button value=1><span class="text-danger">Inactive</span></mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
@@ -90,9 +90,8 @@
                 </mat-error>
             </div>
         </div>
-        <div class="col-10 d-flex">
-            <app-upload-images></app-upload-images>
-        </div>
+        
+        
         <div *ngIf="productName.errors && productName.touched && form.submitted" class="col-10">
             <small class="text-danger" *ngIf="productName.errors['required']"> Product Name is
                 required</small><sup class="ms-1 text-danger">*</sup>
@@ -126,7 +125,7 @@
                 class="ms-1 text-danger">*</sup>
         </div>
         <div *ngIf="status.errors && status.touched && form.submitted">
-            <small class="text-danger" *ngIf="status.errors['required']"> Expiry Date is required</small><sup
+            <small class="text-danger" *ngIf="status.errors['required']"> Status is required</small><sup
                 class="ms-1 text-danger">*</sup>
         </div>
         <div class="mb-3" *ngIf="editMode">
@@ -136,4 +135,10 @@
             <button mat-raised-button color="primary" type="submit">ADD</button>
         </div>
     </form>
+    <div class="col-10 d-flex">
+        <input type="file" (change)="onFileSelected($event)">
+    </div>
+    <div class="mb-3 mt-3">
+        <button mat-raised-button color="primary" (click)="saveImage()">Upload File</button>
+    </div>
 </div>
