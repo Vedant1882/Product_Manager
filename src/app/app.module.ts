@@ -15,6 +15,8 @@ import { ErrorCatchingInterceptor } from './interceptors/error-catching.intercep
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthInterceptor } from './interceptors/authInterceptor';
 import { DialogueBoxComponent } from './dialogue-box/dialogue-box.component';
+import { LoadingInterceptor } from './interceptors/loadingInterceptor';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import { DialogueBoxComponent } from './dialogue-box/dialogue-box.component';
     LoginComponent,
     RegisterComponent,
     DialogueBoxComponent,
+    SpinnerComponent,
 
   ],
   imports: [
@@ -45,6 +48,11 @@ import { DialogueBoxComponent } from './dialogue-box/dialogue-box.component';
  {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
+  multi: true
+},
+{
+  provide: HTTP_INTERCEPTORS,
+  useClass: LoadingInterceptor,
   multi: true
 },
 ],

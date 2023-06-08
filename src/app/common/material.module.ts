@@ -9,6 +9,10 @@ import { MatTableModule } from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   exports: [
@@ -21,7 +25,11 @@ import {MatSelectModule} from '@angular/material/select';
     MatTableModule,
     MatIconModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    MatListModule,
+    MatToolbarModule,
+    MatProgressBarModule
   ],
 })
 export class MaterialModule { }

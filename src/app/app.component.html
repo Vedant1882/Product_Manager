@@ -9,6 +9,7 @@
     <div class="col-12 col-md-10 mt-5"
         [ngClass]="{'col-md-10':tokenHelperService.isLogin,'col-md-12':!tokenHelperService.isLogin}">
         <div class="container">
+            <app-spinner></app-spinner>
             <router-outlet></router-outlet>
         </div>
     </div>
