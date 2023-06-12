@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppConstants } from 'src/app/common/constants/app.constants';
 import { ListComponent } from 'src/app/common/list/list.component';
 import { CategoryService } from 'src/app/common/services/category.service';
+import { LoaderService } from 'src/app/common/services/loader';
 import { PoductService } from 'src/app/common/services/product.service';
 import { Product } from 'src/app/models/product';
 
@@ -16,6 +17,8 @@ export class ProductDetailsComponent implements OnInit {
   @ViewChild('form') form: any;
   //@ViewChild(ListComponent) grid: ListComponent;
   allCategories: any = [];
+  trueValue:boolean=true;
+  falseValue:boolean=false;
   editMode: boolean = false;
   addMode: boolean = false;
   mode: boolean = false;
@@ -35,7 +38,7 @@ export class ProductDetailsComponent implements OnInit {
     imageUrl: "",
     name: ""
   };
-  constructor(private categoryService: CategoryService, private productService: PoductService, private router: Router, private route: ActivatedRoute,readonly snackBar: MatSnackBar) {
+  constructor(private categoryService: CategoryService, private productService: PoductService, private router: Router, private route: ActivatedRoute,readonly snackBar: MatSnackBar,public loader: LoaderService) {
   }
   ngOnInit(): void {
     this.categoryService.getCategory().subscribe({
@@ -70,6 +73,9 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   save(item: Product) {
+    if(this.selectedFile){
+      this.saveImage();
+    }
     item.name = "s";
     item.imageUrl =this.selectedFile.name;
     item.status = true;
@@ -95,5 +101,8 @@ export class ProductDetailsComponent implements OnInit {
   }
   onFileSelected(event: any) {
     this.selectedFile = <File>event.target.files[0];
+  }
+  routeTo(){
+    this.router.navigate(['product']);
   }
 }

@@ -11,6 +11,7 @@ import { ListComponent } from 'src/app/common/list/list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogueBoxComponent } from 'src/app/dialogue-box/dialogue-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LoaderService } from 'src/app/common/services/loader';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ProductComponent {
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
-  constructor(private productService: PoductService,private router: Router,readonly snackBar: MatSnackBar,public dialog: MatDialog) {}
+  constructor(private productService: PoductService,private router: Router,readonly snackBar: MatSnackBar,public dialog: MatDialog,public loader: LoaderService) {}
   public editObj: Product = {
     id: 0,
     productName: "",

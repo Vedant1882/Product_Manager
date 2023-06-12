@@ -27,11 +27,16 @@
                     required</small><sup class="ms-1 text-danger">*</sup>
                     <small class="text-danger" *ngIf="description.errors['minlength']"> Desscription must be 10 charecters long</small><sup class="ms-1 text-danger">*</sup>
             </div>
-            <div class="mb-3" *ngIf="editMode">
-                <button mat-raised-button color="primary" type="submit">Update</button>
-            </div>
-            <div class="mb-3" *ngIf="!editMode">
-                <button mat-raised-button color="primary" type="submit">ADD</button>
+            <div class="d-flex">
+                <div class="mb-3 mt-2" *ngIf="editMode">
+                    <button mat-raised-button color="primary" type="submit">Update</button>
+                </div>
+                <div class="mb-3 mt-2" *ngIf="!editMode">
+                    <button mat-raised-button color="primary" type="submit">ADD</button>
+                </div>
+                <div class="ms-2 mb-3 mt-2">
+                    <button mat-raised-button color="primary" (click)="routeTo()">Cancel</button>
+                </div>
             </div>
             
         </form>

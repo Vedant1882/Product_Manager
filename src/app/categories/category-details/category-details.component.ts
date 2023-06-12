@@ -50,4 +50,7 @@ ngOnInit() {
       this.router.navigate(['/category']);
       this.grid.refresh()
   }
+  routeTo(){
+    this.router.navigate(['/category']);
+  }
 }

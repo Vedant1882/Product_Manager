@@ -3,6 +3,7 @@ import { AppConstants } from '../constants/app.constants';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { dataType } from '../Enum/dataType';
+import { LoaderService } from '../services/loader';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ListComponent implements OnInit {
   dateFormate = AppConstants.dateFormat;
   dataSource = new MatTableDataSource();
   public displayedColumns: any = [];
-  constructor(private router: Router) { }
+  constructor(private router: Router,public loader: LoaderService) { }
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.dataCallBack.subscribe({
       next: (value: any) => {

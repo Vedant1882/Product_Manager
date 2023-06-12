@@ -20,13 +20,7 @@ export class PoductService {
     }
     getProductById(id: number) {
         return this.http.get<any>(this.baseUrl + 'getProductById/' + id);
-      }
-    // saveProduct(product: Product,formData:FormData): Observable<Product> {
-    //     return this.http.post<Product>(this.baseUrl + 'save', {
-    //     product: product,
-    //     formData: formData,
-    //   });
-    //   }
+    }
     saveProduct(product: Product): Observable<Product> {
       return this.http.post<Product>(this.baseUrl + 'save',product);
     }
@@ -35,39 +29,7 @@ export class PoductService {
     }
      
       deleteProduct(id: number) {
+        console.log(id);
         return this.http.get<Product>(this.baseUrl + 'deleteProduct/'+id);
       }
-    // viewData(id: any) {
-
-    //     this.product.forEach((element: Product) => {
-    //         if (element.id == id) {
-    //             Object.assign(this.editObj, element);
-    //         }
-    //     });
-    //     return this.editObj;
-    // }
-    // editProduct(editObj: Product) {
-    //     this.product.forEach((element: Product) => {
-    //         if (element.id == this.editObj.id) {
-    //             element.costPrice = this.editObj.costPrice;
-    //             element.manufecturerName = this.editObj.manufecturerName;
-    //             element.productName = this.editObj.productName;
-    //             element.productType = this.editObj.productType;
-    //             element.retailPrice = this.editObj.retailPrice;
-    //             element.mfgDate = this.editObj.mfgDate;
-    //             element.exprDate = this.editObj.exprDate;
-    //             element.status = this.editObj.status;
-
-    //         }
-    //     });
-    // }
-    // addProduct(item: any) {
-    //     this.product.forEach((element: Product) => {
-    //         if (element.id > this.index) {
-    //             this.index = element.id;
-    //         }
-    //     });
-    //     item.id = this.index + 1;
-    //     this.product.push(item);
-    // }
 }
