@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { ListComponent } from './list/list.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { MaterialModule } from './material.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 
@@ -10,12 +11,14 @@ import { MaterialModule } from './material.module';
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    JsonPipe
   ],
   exports: [
     ListComponent,
     MaterialModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
 })
 export class HelperModule { }

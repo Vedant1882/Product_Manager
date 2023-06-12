@@ -87,6 +87,7 @@ export class CategoryComponent {
 
   ngOnInit(): void {
   }
+  
   dataCallBack(){
     return this.categoryService.getCategory();
   }

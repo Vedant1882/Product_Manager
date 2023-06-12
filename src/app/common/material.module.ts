@@ -13,6 +13,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   exports: [
@@ -29,7 +31,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatCardModule,
     MatListModule,
     MatToolbarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatPaginatorModule,
+    FormsModule
   ],
 })
 export class MaterialModule { }

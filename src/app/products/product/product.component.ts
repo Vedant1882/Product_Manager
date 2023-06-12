@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogueBoxComponent } from 'src/app/dialogue-box/dialogue-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LoaderService } from 'src/app/common/services/loader';
+import { TableFilter } from 'src/app/models/tableFilter';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class ProductComponent {
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
+  pageIndex=0;
   constructor(private productService: PoductService,private router: Router,readonly snackBar: MatSnackBar,public dialog: MatDialog,public loader: LoaderService) {}
   public editObj: Product = {
     id: 0,
@@ -98,7 +100,6 @@ export class ProductComponent {
   ];
   
  
-
   button:button[]=[{
     name:"Edit",
     callBackFunction: (value: Product)  => this.editCallBack(value),
@@ -118,9 +119,12 @@ toolbar:ToolBar={
     color:"primary"
   }]
 };
-dataCallBack(){
-  return this.productService.getProduct();
-}
+tableFilter:TableFilter
+dataCallBack=(tableFilter:TableFilter) => this.productService.getProduct(tableFilter);
+// {
+//   debugger;
+//   return this.productService.getProduct(tableFilter);
+// }
 addCallBack = (): void => {
   this.router.navigate(['product/add', '']);
 }

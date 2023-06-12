@@ -3,6 +3,8 @@
 </div>
 
     <div *ngIf="dataSource">
+        <input type="input" class="form-control rounded searchbar ms-2 mb-4" id="search-bar" placeholder="Search"
+       aria-label="Search" aria-describedby="search-addon" [ngModel]="tableFilter.searchValue" #id="ngModel" (keyup)="searchFn($event)" />
         <div class="d-flex">
             <h1>{{toolBar.title}}</h1>
             <div *ngFor="let btn of toolBar.btnArr">
@@ -38,6 +40,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-
-
-    </div>
+        <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page"
+              (page)="handlePageEvent($event)">
+</mat-paginator>
