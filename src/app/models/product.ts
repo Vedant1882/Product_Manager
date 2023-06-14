@@ -11,4 +11,5 @@ export interface Product{
     expiryDate:Date;
     imageUrl:string;
     name:string;
+    statsInString?:string
   }

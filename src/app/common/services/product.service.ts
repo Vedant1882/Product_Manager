@@ -17,7 +17,6 @@ export class PoductService {
 
 
     getProduct(tableFilter:TableFilter) {
-      debugger
         return this.http.post<TableFilter>(this.baseUrl + 'getproduct',tableFilter);
     }
     getProductById(id: number) {

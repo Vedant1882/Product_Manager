@@ -1,6 +1,6 @@
 <h1 class="d-flex"> Welcome to the Dashboard of <p class="text-danger ms-2"> Project Manager</p>
 </h1>
-<table class="table">
+<!-- <table class="table">
     <thead class="thead-dark mt-5">
         <tr>
             <th scope="col">Id</th>
@@ -18,4 +18,10 @@
 
         </tr>
     </tbody>
-</table>
+</table> -->
+<kendo-grid [data]="users">
+    <kendo-grid-column field="ID" title="ID"> </kendo-grid-column>
+    <kendo-grid-column field="FirstName" title="FirstName"> </kendo-grid-column>
+    <kendo-grid-column field="LastName" title="LastName"> </kendo-grid-column>
+    <kendo-grid-column field="Email" title="Email"> </kendo-grid-column>
+</kendo-grid>

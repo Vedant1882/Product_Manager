@@ -10,6 +10,7 @@ import { DialogueBoxComponent } from 'src/app/dialogue-box/dialogue-box.componen
 import { ListDataObj } from 'src/app/models/ListDataObj';
 import { button } from 'src/app/models/buttons';
 import { category } from 'src/app/models/category';
+import { TableFilter } from 'src/app/models/tableFilter';
 import { ToolBar } from 'src/app/models/toolbar';
 import Swal from 'sweetalert2';
 
@@ -88,9 +89,8 @@ export class CategoryComponent {
   ngOnInit(): void {
   }
   
-  dataCallBack(){
-    return this.categoryService.getCategory();
-  }
+  tableFilter: TableFilter
+  dataCallBack = (tableFilter: TableFilter) => this.categoryService.getCategoryTable(tableFilter);
   addCallBack = (): void => {
     this.router.navigate(['category/add', '']);
   }

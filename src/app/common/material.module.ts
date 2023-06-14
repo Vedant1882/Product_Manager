@@ -15,6 +15,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   exports: [
@@ -33,7 +36,10 @@ import { FormsModule } from '@angular/forms';
     MatToolbarModule,
     MatProgressBarModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    MatSortModule,
+    MatTooltipModule,
+    MatAutocompleteModule
   ],
 })
 export class MaterialModule { }

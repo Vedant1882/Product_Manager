@@ -4,6 +4,7 @@ import { Product } from 'src/app/models/product';
 import { AppConstants } from '../constants/app.constants';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { TableFilter } from 'src/app/models/tableFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,9 @@ export class CategoryService {
 
   getCategory(): Observable<category>{
     return this.http.get<any>(this.baseUrl + 'getCategory');
+  }
+  getCategoryTable(tableFilter:TableFilter){
+    return this.http.post<TableFilter>(this.baseUrl + 'getCategorytable',tableFilter);
   }
   getCategoryById(id: number) {
     return this.http.get<any>(this.baseUrl + 'getCategoryById/' + id);

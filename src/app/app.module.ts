@@ -17,6 +17,8 @@ import { AuthInterceptor } from './interceptors/authInterceptor';
 import { DialogueBoxComponent } from './dialogue-box/dialogue-box.component';
 import { LoadingInterceptor } from './interceptors/loadingInterceptor';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { GridModule } from '@progress/kendo-angular-grid';
+
 
 
 @NgModule({
@@ -38,7 +40,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    GridModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

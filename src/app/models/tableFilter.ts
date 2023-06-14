@@ -3,7 +3,8 @@ import { DisplayedHeaders } from "./displayedHeader"
 export interface TableFilter{
    pageSize:number,
    pageIndex:number,
-   columnName?:string,
+   sortingColumnName?:string,
    searchValue?:string
-   displayedHeaders?:DisplayedHeaders
+   displayedHeaders?:DisplayedHeaders,
+   sortingDirection?:string,
   }

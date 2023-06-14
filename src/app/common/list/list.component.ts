@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AppConstants } from '../constants/app.constants';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { TableFilter } from 'src/app/models/tableFilter';
 import { Subject, debounceTime } from 'rxjs';
 import { DisplayedHeaders } from 'src/app/models/displayedHeader';
+import { MatSort, Sort } from '@angular/material/sort';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { DisplayedHeaders } from 'src/app/models/displayedHeader';
 })
 export class ListComponent implements OnInit {
 
-  
+  @ViewChild('empTbSort') empTbSort = new MatSort();
   @Input() data: any;
   @Input() listType: any = [];
   @Input() listHeader: any = [];
@@ -30,7 +31,8 @@ export class ListComponent implements OnInit {
   dateFormate = AppConstants.dateFormat;
   dataSource = new MatTableDataSource();
   public displayedColumns: any = [];
-  public displayedHeader:DisplayedHeaders
+  public displayedHeader:DisplayedHeaders;
+  pageEvent: PageEvent;
   length = 50;
   pageSize = 10;
   pageIndex = 0;
@@ -39,7 +41,7 @@ export class ListComponent implements OnInit {
   showPageSizeOptions = true;
   showFirstLastButtons = true;
   disabled = false;
-  
+  isData=true;
   private subject: Subject<string> = new Subject();
   constructor(private router: Router,public loader: LoaderService) { }
   tableFilter:TableFilter={
@@ -50,7 +52,6 @@ export class ListComponent implements OnInit {
     console.log(this.pageEvent);
     this.tableFilter.pageIndex=this.pageIndex;
     this.tableFilter.pageSize=this.pageSize;
-    debugger;
     this.displayedColumns = [];
     this.listHeader.forEach((x: any) => {
       this.displayedColumns.push(x.columnName);
@@ -58,19 +59,32 @@ export class ListComponent implements OnInit {
     this.tableFilter.displayedHeaders=this.displayedColumns;
     this.dataSource = new MatTableDataSource(this.dataCallBack(this.tableFilter).subscribe({
       next: (value: any) => {
-        this.dataSource = value;
+        debugger;
+        if(value.data.length>0){
+          this.dataSource = value.data;
+          this.isData=true;
+        }
+        else{
+          this.isData=false;
+        }
+        this.length=value.totalPages
       },
       error(msg:any) {
         alert(msg);
       }
     }));
-   
     this.button.forEach((x: any) => {
       this.displayedColumns.push(x.name);
     });
   }
-
-  pageEvent: PageEvent;
+  ngAfterViewInit() {   
+    this.dataSource.sort = this.empTbSort;
+}
+sortData(sort: Sort) {
+  this.tableFilter.sortingColumnName = sort.active;
+  this.tableFilter.sortingDirection = sort.direction;
+  this.refresh();
+  }
 
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
@@ -79,11 +93,11 @@ export class ListComponent implements OnInit {
     this.pageIndex = e.pageIndex;
     this.refresh()
   }
-  searchFn(event:any){
-    //this.tableFilter.searchValue=event.key;
+  searchFn(value:any){
+    this.tableFilter.searchValue=value;
     this.refresh()
   }
-
+  
   refresh() {
     this.ngOnInit();
   }

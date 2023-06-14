@@ -36,7 +36,8 @@ export class ProductDetailsComponent implements OnInit {
     manufrecturingDate: new Date(),
     expiryDate: new Date(),
     imageUrl: "",
-    name: ""
+    name: "",
+    statsInString:""
   };
   constructor(private categoryService: CategoryService, private productService: PoductService, private router: Router, private route: ActivatedRoute,readonly snackBar: MatSnackBar,public loader: LoaderService) {
   }
@@ -59,14 +60,19 @@ export class ProductDetailsComponent implements OnInit {
           this.editObj.id = this.productId;
           this.editObj.name = value.name;
           this.editObj.productName = value.productName;
-          this.editObj.manufrecturerName = value.manufecturerName;
+          this.editObj.manufrecturerName = value.manufrecturerName;
           this.editObj.manufrecturingDate = value.manufrecturingDate;
           this.editObj.expiryDate = value.expiryDate;
           this.editObj.categoryId = value.categoryId;
           this.editObj.productType = value.productType;
           this.editObj.retailPrice = value.retailPrice;
           this.editObj.costPrice = value.costPrice;
-          this.editObj.status = value.status;
+          if(value.status==true){
+            this.editObj.statsInString="Active"
+          }
+          else{
+            this.editObj.statsInString="InActive"
+          }
           this.editMode = true;
         },
       })
@@ -78,13 +84,18 @@ export class ProductDetailsComponent implements OnInit {
     }
     item.name = "s";
     item.imageUrl =this.selectedFile.name;
-    item.status = true;
+    if(item.statsInString=="Active")
+    {
+      item.status = true;
+    }
+    else{
+      item.status = false;
+    }
     this.productService.saveProduct(item).subscribe();
     //this.grid.refresh();
     this.router.navigate(['product']);
   }
   saveImage(){
-    debugger;
     const formData = new FormData();
     formData.append("image", this.selectedFile);
     this.productService.uploadImages(formData).subscribe({

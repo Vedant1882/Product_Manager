@@ -4,7 +4,7 @@ import { AppConstants } from 'src/app/common/constants/app.constants';
 import { dataType } from 'src/app/common/Enum/dataType';
 import { ListDataObj } from 'src/app/models/ListDataObj';
 import { button } from 'src/app/models/buttons';
-import { PoductService} from 'src/app/common/services/product.service';
+import { PoductService } from 'src/app/common/services/product.service';
 import { Router } from '@angular/router';
 import { ToolBar } from 'src/app/models/toolbar';
 import { ListComponent } from 'src/app/common/list/list.component';
@@ -27,8 +27,8 @@ export class ProductComponent {
   addMode: boolean = false;
   mode: boolean = false;
   dateFormate = AppConstants.dateFormat;
-  pageIndex=0;
-  constructor(private productService: PoductService,private router: Router,readonly snackBar: MatSnackBar,public dialog: MatDialog,public loader: LoaderService) {}
+  pageIndex = 0;
+  constructor(private productService: PoductService, private router: Router, readonly snackBar: MatSnackBar, public dialog: MatDialog, public loader: LoaderService) { }
   public editObj: Product = {
     id: 0,
     productName: "",
@@ -36,11 +36,11 @@ export class ProductComponent {
     productType: "",
     costPrice: 0,
     retailPrice: 0,
-    categoryId:0,
+    categoryId: 0,
     manufrecturingDate: new Date(),
     expiryDate: new Date(),
     imageUrl: "",
-    name:""
+    name: ""
   };
   listHeader: ListDataObj[] = [{
     columnName: 'Id',
@@ -98,70 +98,58 @@ export class ProductComponent {
     fieldType: dataType.string
   },
   ];
-  
- 
-  button:button[]=[{
-    name:"Edit",
-    callBackFunction: (value: Product)  => this.editCallBack(value),
-    color:"primary"
+
+
+  button: button[] = [{
+    name: "Edit",
+    callBackFunction: (value: Product) => this.editCallBack(value),
+    color: "primary"
   },
   {
-    name:"Delete",
-    callBackFunction:(value: Product) => this.deleteCallbackFunction(value),
-    color:"warn"
+    name: "Delete",
+    callBackFunction: (value: Product) => this.deleteCallbackFunction(value),
+    color: "warn"
   },
-];
-toolbar:ToolBar={
-  title:"Product" ,
-  btnArr:[]=[{
-    name:"Add",
-    callBackFunction: ()  => this.addCallBack(),
-    color:"primary"
-  }]
-};
-tableFilter:TableFilter
-dataCallBack=(tableFilter:TableFilter) => this.productService.getProduct(tableFilter);
-// {
-//   debugger;
-//   return this.productService.getProduct(tableFilter);
-// }
-addCallBack = (): void => {
-  this.router.navigate(['product/add', '']);
-}
-editCallBack = (value: Product): void => {
-  this.router.navigate(['product/edit', value.id]);
-}
-deleteCallbackFunction = (value: Product): void => {
-  const dialogRef = this.dialog.open(DialogueBoxComponent, {
-    width: '250px',
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      this.productService.deleteProduct(value.id).subscribe({
-        next: (value: any) => {
-          this.snackBar.open("Deleted Succesfully", 'Close', {
-            duration: 3000,
-          });
-          if (value) {
-            this.grid.refresh();
-          }
-        },
+  ];
+  toolbar: ToolBar = {
+    title: "Product",
+    btnArr: [] = [{
+      name: "Add",
+      callBackFunction: () => this.addCallBack(),
+      color: "primary"
+    }]
+  };
+  tableFilter: TableFilter
+  dataCallBack = (tableFilter: TableFilter) => this.productService.getProduct(tableFilter);
+  // {
+  //   return this.productService.getProduct(tableFilter);
+  // }
+  addCallBack = (): void => {
+    this.router.navigate(['product/add', '']);
+  }
+  editCallBack = (value: Product): void => {
+    this.router.navigate(['product/edit', value.id]);
+  }
+  deleteCallbackFunction = (value: Product): void => {
+    const dialogRef = this.dialog.open(DialogueBoxComponent, {
+      width: '250px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.productService.deleteProduct(value.id).subscribe({
+          next: (value: any) => {
+            this.snackBar.open("Deleted Succesfully", 'Close', {
+              duration: 3000,
+            });
+            if (value) {
+              this.grid.refresh();
+            }
+          },
+        }
+        );
       }
-      );
-    }
-  });
-}
-// deleteCallbackFunction = (value: Product): void => {
-//   this.product.forEach((element: Product) => {
-//     if (element.id == value.id) {
-//       const index = this.product.indexOf(element);
-//       if (index !== -1) {
-//         this.product.splice(index, 1);
-//       }
-//     }
-//   });
-//   }
+    });
+  }
 
-  
 }
 
