@@ -20,8 +20,11 @@
     </tbody>
 </table> -->
 <kendo-grid [data]="users">
-    <kendo-grid-column field="ID" title="ID"> </kendo-grid-column>
-    <kendo-grid-column field="FirstName" title="FirstName"> </kendo-grid-column>
-    <kendo-grid-column field="LastName" title="LastName"> </kendo-grid-column>
-    <kendo-grid-column field="Email" title="Email"> </kendo-grid-column>
+    <kendo-grid-column field="id" title="id"> </kendo-grid-column>
+    <kendo-grid-column field="firstName" title="firstName"> </kendo-grid-column>
+    <kendo-grid-column field="lastName" title="lastName"> </kendo-grid-column>
+    <kendo-grid-column field="email" title="email"> </kendo-grid-column>
 </kendo-grid>
+<mat-paginator [length]="length" [pageSize]="10" class="mt-4" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+        (page)="handlePageEvent($event)">
+    </mat-paginator>

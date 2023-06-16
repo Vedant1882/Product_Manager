@@ -89,7 +89,7 @@ export class ProductComponent {
   },
   {
     columnName: 'Image Url',
-    field: 'imgUrl',
+    field: 'imageUrl',
     fieldType: dataType.string
   },
   {

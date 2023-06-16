@@ -22,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
   editMode: boolean = false;
   addMode: boolean = false;
   mode: boolean = false;
+  imageSrc: string;
   selectedFile: File;
   dateFormate = AppConstants.dateFormat;
   productId = 0;
