@@ -12,10 +12,6 @@ export class PoductService {
     baseUrl: string = AppConstants.url + 'product/';
   prodId: number;
   constructor(private http: HttpClient) { }
-
-   
-
-
     getProduct(tableFilter:TableFilter) {
         return this.http.post<TableFilter>(this.baseUrl + 'getproduct',tableFilter);
     }
@@ -28,9 +24,7 @@ export class PoductService {
     uploadImages(formData:FormData):Observable<any>{
       return this.http.post<any>(this.baseUrl + 'saveImages',formData);
     }
-     
-      deleteProduct(id: number) {
-        console.log(id);
-        return this.http.get<Product>(this.baseUrl + 'deleteProduct/'+id);
-      }
+    deleteProduct(id: number) {
+      return this.http.get<Product>(this.baseUrl + 'deleteProduct/'+id);
+    }
 }

@@ -12,6 +12,7 @@ export interface Users {
     updatedAt: Date,
     updatedById: number,
     deletedAt: Date,
-    deletedById: number
+    deletedById: number,
+    confirmpassword?:string
 
 }

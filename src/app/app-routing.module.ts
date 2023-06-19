@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'product', loadChildren: () => import('./products/product.module').then(m => m.ProductModule), canActivate: [AuthGuard] },
   { path: 'category', loadChildren: () => import('./categories/category.module').then(m => m.CategoryModule), canActivate: [AuthGuard] },
+  { path: 'user', loadChildren: () => import('./users/user.module').then(m => m.UserModule), canActivate: [AuthGuard] },
+
 ];
 
 @NgModule({

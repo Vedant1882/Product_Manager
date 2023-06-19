@@ -23,4 +23,11 @@ export class UserService {
     loginUsers(userLogin:UserLogin):Observable<UserLogin>{
         return this.http.post<Users>(this.baseUrl +'login',userLogin);
     }
+    getUserById(id: number) {
+        return this.http.get<any>(this.baseUrl + 'getbyid/' + id);
+      }
+      deleteUser(id: number) {
+        console.log(id);
+        return this.http.get<any>(this.baseUrl + 'deleteuser/'+id);
+      }
 }
