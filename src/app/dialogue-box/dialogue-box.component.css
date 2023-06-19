@@ -1,0 +1,16 @@
+.delete-button:hover {
+    background-color: aliceblue;
+    color: rgb(151, 19, 228);
+  }
+  .delete-button{
+    background-color: rgb(151, 19, 228);
+    color: aliceblue;
+  }
+  .edit-button:hover {
+    background-color: aliceblue;
+    color: rgb(248, 54, 119);
+  }
+  .edit-button{
+    background-color: rgb(248, 54, 119);
+    color: aliceblue;
+  }

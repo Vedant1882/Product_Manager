@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Delete file</h1>
+<h1 mat-dialog-title class="text-danger"> !!  Delete file  !!</h1>
 <div mat-dialog-content>
   Would you like to delete this?
 </div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>No</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes Delete!</button>
+<div mat-dialog-actions class="ms-3">
+  <button mat-button mat-dialog-close class="edit-button">No</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="ms-2 delete-button">Yes Delete!</button>
 </div>

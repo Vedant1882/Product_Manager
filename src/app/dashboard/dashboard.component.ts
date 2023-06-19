@@ -45,6 +45,10 @@ export class DashboardComponent implements OnInit {
     this.pageIndex = e.pageIndex;
     this.refresh()
   }
+  searchFn(value:any){
+    this.tableFilter.searchValue=value;
+    this.refresh()
+  }
   refresh() {
     this.ngOnInit();
   }
