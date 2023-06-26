@@ -1,5 +1,6 @@
 export enum dataType{
     number,
     string,
-    date
+    date,
+    button
 }

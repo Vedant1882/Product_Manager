@@ -1,6 +1,7 @@
 
 
-    <h1>Register to product managaer</h1>
+<h1 class="text-success" *ngIf="editMode">Edit User details</h1>
+<h1 class="text-success" *ngIf="!editMode">Add User details</h1>
 
     <form #form="ngForm" novalidate (ngSubmit)=" form.form.valid && save()">
         <input type="hidden" id='id' [(ngModel)]="editObj.id" name="id" #id="ngModel">

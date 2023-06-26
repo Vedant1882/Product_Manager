@@ -3,20 +3,20 @@
 </div>
 
 
-    <input type="input" class="form-control rounded searchbar ms-2 mb-4" id="search-bar" placeholder="Search"
-        aria-label="Search" aria-describedby="search-addon" [ngModel]="tableFilter.searchValue" #id="ngModel"
-        (keyup)="searchFn(id.value)" />
+<input type="input" class="form-control rounded searchbar ms-2 mb-4" id="search-bar" placeholder="Search"
+    aria-label="Search" aria-describedby="search-addon" [ngModel]="tableFilter.searchValue" #id="ngModel"
+    (keyup)="searchFn(id.value)" />
 
-    <div class="d-flex">
-        <h1>{{toolBar.title}}</h1>
-        <div *ngFor="let btn of toolBar.btnArr">
-            <button mat-raised-button class="pull-right" color="{{btn.color}}" (click)="btn.callBackFunction()"
-                class="ms-4">{{btn.name}}</button>
-        </div>
-        <!-- <button mat-raised-button class="pull-right ms-4" color="accent" (click)="refresh()">Refresh</button> -->
+<div class="d-flex">
+    <h1>{{toolBar.title}}</h1>
+    <div *ngFor="let btn of toolBar.btnArr">
+        <button mat-raised-button class="pull-right" color="{{btn.color}}" (click)="btn.callBackFunction()"
+            class="ms-4">{{btn.name}}</button>
     </div>
-    <div *ngIf="isData">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-4" matSort #empTbSort="matSort"
+    <!-- <button mat-raised-button class="pull-right ms-4" color="accent" (click)="refresh()">Refresh</button> -->
+</div>
+<div *ngIf="isData">
+    <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-4" matSort #empTbSort="matSort"
         (matSortChange)="sortData($event)">
         <div *ngFor="let header of listHeader">
             <ng-container matColumnDef="{{header.columnName}}">
@@ -44,9 +44,39 @@
         </div>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [length]="length" [pageSize]="10" class="mt-4" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
-        (page)="handlePageEvent($event)">
+    </table> -->
+    <!-- <kendo-grid [data]="data">
+        <div *ngFor="let header of listHeader">
+            <kendo-grid-column *ngIf="header.fieldType != dataType.date " field="{{header.field}}" title="{{header.columnName}}" [sortable]="true"> </kendo-grid-column>
+            <kendo-grid-column *ngIf="header.fieldType == dataType.date " title="{{header.columnName}}" field="{{header.field }}"  [format]="{ datetime: '{{dateFormate}}' }" [sortable]="false"> btn </kendo-grid-column>
+        </div>
+    </kendo-grid> -->
+    <kendo-grid [data]="data" [sortable]="true" style="height: 340px; width: 1300px;">
+        <ng-container *ngFor="let header of listHeader">
+            <kendo-grid-column [field]="header.field" [title]="header.columnName" [width]="200">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <ng-container *ngIf="header.fieldType == dataType.date">
+                        {{ dataItem[header.field] | date: dateFormate }}
+                    </ng-container>
+                    <ng-container *ngIf="header.fieldType == dataType.string || (header.fieldType == dataType.number && header.field !== 'status')">
+                        <span *ngIf="dataItem[header.field]==true" class="text-success">Active</span>
+                        <span *ngIf="dataItem[header.field]==false" class="text-danger">In-Active</span>
+                        <span *ngIf="dataItem[header.field]!=true && dataItem[header.field]!=false">{{dataItem[header.field]}}</span>
+
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+        </ng-container>
+            <kendo-grid-column class="d-flex" [width]="200" [sticky]="true">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <button *ngFor="let btn of button" (click)="btn.callBackFunction(dataItem)" class="ms-3"  mat-raised-button color={{btn.color}}>
+                        {{ btn.name }}
+                    </button>
+                </ng-template>
+            </kendo-grid-column>
+    </kendo-grid>
+    <mat-paginator [length]="length" [pageSize]="5" class="mt-4" [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page" (page)="handlePageEvent($event)">
     </mat-paginator>
 </div>
 <div *ngIf="!isData">

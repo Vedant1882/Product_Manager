@@ -9,6 +9,7 @@ import { TableFilter } from 'src/app/models/tableFilter';
 import { Subject, debounceTime } from 'rxjs';
 import { DisplayedHeaders } from 'src/app/models/displayedHeader';
 import { MatSort, Sort } from '@angular/material/sort';
+import { ListDataObj } from 'src/app/models/ListDataObj';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class ListComponent implements OnInit {
   public displayedHeader:DisplayedHeaders;
   pageEvent: PageEvent;
   length = 50;
-  pageSize = 10;
+  pageSize = 5;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
   hidePageSize = false;
@@ -55,13 +56,22 @@ export class ListComponent implements OnInit {
     this.displayedColumns = [];
     this.listHeader.forEach((x: any) => {
       this.displayedColumns.push(x.columnName);
+      
     });
+    // if(this.button.length > 0){
+    //   let btn:ListDataObj = {
+    //     columnName: 'Action',
+    //     field: 'btn',
+    //     fieldType: dataType.button
+    //   }
+    //   this.listHeader.push(btn);
+    // }
     this.tableFilter.displayedHeaders=this.displayedColumns;
-    this.dataSource = new MatTableDataSource(this.dataCallBack(this.tableFilter).subscribe({
+    this.data=this.dataCallBack(this.tableFilter).subscribe({
       next: (value: any) => {
         debugger;
         if(value.data.length>0){
-          this.dataSource = value.data;
+          this.data = value.data;
           this.isData=true;
         }
         else{
@@ -72,10 +82,26 @@ export class ListComponent implements OnInit {
       error(msg:any) {
         alert(msg);
       }
-    }));
-    this.button.forEach((x: any) => {
-      this.displayedColumns.push(x.name);
     });
+    // this.dataSource = new MatTableDataSource(this.dataCallBack(this.tableFilter).subscribe({
+    //   next: (value: any) => {
+    //     debugger;
+    //     if(value.data.length>0){
+    //       this.dataSource = value.data;
+    //       this.isData=true;
+    //     }
+    //     else{
+    //       this.isData=false;
+    //     }
+    //     this.length=value.totalPages
+    //   },
+    //   error(msg:any) {
+    //     alert(msg);
+    //   }
+    // }));
+    // this.button.forEach((x: any) => {
+    //   this.data.push(x.callBackFunction());
+    // });
   }
   ngAfterViewInit() {   
     this.dataSource.sort = this.empTbSort;

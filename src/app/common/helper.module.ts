@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
     ListComponent,
     MaterialModule,
     CommonModule,
-    FormsModule
+    FormsModule,
   ],
 })
 export class HelperModule { }

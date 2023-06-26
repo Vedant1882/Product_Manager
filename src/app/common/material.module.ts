@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 @NgModule({
   exports: [
@@ -39,7 +40,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     FormsModule,
     MatSortModule,
     MatTooltipModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    GridModule
+
   ],
 })
 export class MaterialModule { }
