@@ -43,7 +43,7 @@
         <mat-form-field class="example-full-width" appearance="fill" style="width:50%">
             <mat-label>Phone Number</mat-label>
             <input matInput placeholder="enter Phone Number" type="number" id="phoneNumber"
-                [(ngModel)]="editObj.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" required
+                [(ngModel)]="editObj.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" required [pattern]="phoneRegex"
                 [ngClass]="{error:phoneNumber.errors && phoneNumber .touched && form.submitted}">
         </mat-form-field><br>
 

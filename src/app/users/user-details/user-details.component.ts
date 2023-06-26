@@ -13,7 +13,7 @@ import { Users } from 'src/app/models/users';
 export class UserDetailsComponent {
   @ViewChild('form') form: any;
   @ViewChild(ListComponent) grid: ListComponent;
-  
+  phoneRegex=AppConstants.phonenumberValidation;
   passwordRegex=AppConstants.passwordValidation;
   editMode: boolean = false;
   public editObj: Users = {
